@@ -19,6 +19,7 @@
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
 		"@eslint/js": "^9.39.1",
+		"@material-tailwind/html": "3.0.0-beta.7",
 		"@playwright/test": "^1.57.0",
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/adapter-node": "^5.5.1",

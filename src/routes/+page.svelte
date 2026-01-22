@@ -9,8 +9,12 @@
 
 <svelte:head>
 	<title>LSP Manajemen Pendidikan Islam - Beranda</title>
-	<meta name="description" content="Lembaga Sertifikasi Profesi terdepan dalam mengembangkan kompetensi profesional di bidang manajemen pendidikan Islam yang berkualitas dan terpercaya." />
+	<meta
+		name="description"
+		content="Lembaga Sertifikasi Profesi terdepan dalam mengembangkan kompetensi profesional di bidang manajemen pendidikan Islam yang berkualitas dan terpercaya."
+	/>
 </svelte:head>
+
 
 <HeroSection />
 <WhyChooseUs />
@@ -18,4 +22,3 @@
 <AlumniReviews />
 <NewsSection />
 <SchemaData />
-

@@ -8,7 +8,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-3 gap-8">
-			<div class="bg-white rounded-lg p-6 shadow-lg">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl transition-shadow">
 				<div class="flex items-center mb-4">
 					<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face" 
 						 alt="Ahmad Fauzi" class="w-12 h-12 rounded-full mr-4">
@@ -31,7 +31,7 @@
 				</blockquote>
 			</div>
 
-			<div class="bg-white rounded-lg p-6 shadow-lg">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl transition-shadow">
 				<div class="flex items-center mb-4">
 					<img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face" 
 						 alt="Siti Nurhaliza" class="w-12 h-12 rounded-full mr-4">
@@ -54,7 +54,7 @@
 				</blockquote>
 			</div>
 
-			<div class="bg-white rounded-lg p-6 shadow-lg">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl transition-shadow">
 				<div class="flex items-center mb-4">
 					<img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" 
 						 alt="Muhammad Ridwan" class="w-12 h-12 rounded-full mr-4">

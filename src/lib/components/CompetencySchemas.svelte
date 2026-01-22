@@ -8,7 +8,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-			<div class="bg-white border border-blue-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-blue-50 transition-all border border-blue-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,7 +25,7 @@
 				</ul>
 			</div>
 
-			<div class="bg-white border border-purple-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-purple-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-purple-50 transition-all border border-purple-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@
 				</ul>
 			</div>
 
-			<div class="bg-white border border-green-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-green-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-green-50 transition-all border border-green-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,7 +59,7 @@
 				</ul>
 			</div>
 
-			<div class="bg-white border border-yellow-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-yellow-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-yellow-50 transition-all border border-yellow-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,7 +76,7 @@
 				</ul>
 			</div>
 
-			<div class="bg-white border border-red-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-red-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-red-50 transition-all border border-red-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +93,7 @@
 				</ul>
 			</div>
 
-			<div class="bg-white border border-emerald-200 rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all">
+			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl p-6 hover:shadow-xl hover:bg-emerald-50 transition-all border border-emerald-200">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mr-4 text-white">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@
 		</div>
 
 		<div class="text-center mt-12">
-			<a href="/uji-kompetensi" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-block">
+			<a href="/uji-kompetensi" data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none inline-block">
 				Lihat Semua Skema
 			</a>
 		</div>

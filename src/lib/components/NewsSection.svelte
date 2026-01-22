@@ -1,6 +1,10 @@
+<script lang="ts">
+	import { fly } from 'svelte/transition';
+</script>
+
 <section class="py-16 bg-white">
 	<div class="container mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ x: -50, duration: 600 }}>
 			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Berita Terkini</h2>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Informasi terbaru seputar kegiatan dan perkembangan LSP MPI
@@ -8,7 +12,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-3 gap-8">
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:bg-blue-50 transition-all">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:bg-blue-50 hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 100 }}>
 				<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop" 
 					 alt="Seminar Nasional" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -30,7 +34,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:bg-purple-50 transition-all">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:bg-purple-50 hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 200 }}>
 				<img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop" 
 					 alt="Sertifikasi Batch" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -52,7 +56,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:bg-green-50 transition-all">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:bg-green-50 hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 300 }}>
 				<img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=250&fit=crop" 
 					 alt="Workshop Asesor" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -75,8 +79,8 @@
 			</article>
 		</div>
 
-		<div class="text-center mt-12">
-			<a href="/berita" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-block">
+		<div class="text-center mt-12" in:fly={{ x: -50, duration: 600, delay: 400 }}>
+			<a href="/berita" data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none inline-block">
 				Lihat Semua Berita
 			</a>
 		</div>

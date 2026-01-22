@@ -1,10 +1,14 @@
+<script lang="ts">
+	import { fly } from 'svelte/transition';
+</script>
+
 <svelte:head>
 	<title>Berita - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
 <div class="py-16 bg-white">
 	<div class="max-w-7xl mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ x: -50, duration: 600 }}>
 			<h1 class="text-4xl font-bold text-gray-900 mb-4">Berita & Informasi</h1>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Informasi terkini seputar kegiatan dan perkembangan LSP MPI
@@ -12,7 +16,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-3 gap-8">
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 100 }}>
 				<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop" 
 					 alt="Seminar Nasional" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -34,7 +38,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 150 }}>
 				<img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop" 
 					 alt="Sertifikasi Batch" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -56,7 +60,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 200 }}>
 				<img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=250&fit=crop" 
 					 alt="Workshop Asesor" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -78,7 +82,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 250 }}>
 				<img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop" 
 					 alt="Kerjasama" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -100,7 +104,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 300 }}>
 				<img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop" 
 					 alt="Pelatihan" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -122,7 +126,7 @@
 				</div>
 			</article>
 
-			<article class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
+			<article class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 350 }}>
 				<img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop" 
 					 alt="Pengakuan" class="w-full h-48 object-cover">
 				<div class="p-6">
@@ -145,8 +149,8 @@
 			</article>
 		</div>
 
-		<div class="text-center mt-12">
-			<button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+		<div class="text-center mt-12" in:fly={{ x: -50, duration: 600, delay: 400 }}>
+			<button data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
 				Muat Berita Lainnya
 			</button>
 		</div>
