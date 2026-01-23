@@ -2,9 +2,13 @@
 	<title>Kontak - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
+<script>
+	import { fly } from 'svelte/transition';
+</script>
+
 <div class="py-16 bg-white">
 	<div class="max-w-7xl mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ y: 50, duration: 600 }}>
 			<h1 class="text-4xl font-bold text-gray-900 mb-4">Hubungi Kami</h1>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Kami siap membantu Anda dengan informasi seputar sertifikasi profesi
@@ -12,7 +16,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-2 gap-12">
-			<div>
+			<div in:fly={{ x: -50, duration: 600 }}>
 				<h2 class="text-2xl font-bold mb-6">Informasi Kontak</h2>
 				
 				<div class="space-y-6">
@@ -81,7 +85,7 @@
 				</div>
 			</div>
 
-			<div>
+			<div in:fly={{ x: 50, duration: 600 }}>
 				<h2 class="text-2xl font-bold mb-6">Kirim Pesan</h2>
 				<form class="space-y-6">
 					<div>
@@ -122,7 +126,7 @@
 			</div>
 		</div>
 
-		<div class="mt-16">
+		<div class="mt-16" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="text-2xl font-bold text-center mb-8">Lokasi Kami</h2>
 			<div class="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
 				<p class="text-gray-600">Peta Google Maps akan ditampilkan di sini</p>

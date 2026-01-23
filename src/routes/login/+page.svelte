@@ -1,5 +1,6 @@
 <script>
 	import { LogIn } from '@lucide/svelte';
+	import { fly } from 'svelte/transition';
 </script>
 
 <svelte:head>
@@ -7,13 +8,13 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-	<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl w-full max-w-md p-8">
+	<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl w-full max-w-md p-8" in:fly={{ y: 50, duration: 600 }}>
 		<div class="text-center mb-6">
 			<h2 class="text-3xl font-bold text-gray-900 mb-2">Login</h2>
 			<p class="text-gray-600">Masuk ke akun LSP MPI Anda</p>
 		</div>
 
-		<form class="space-y-4">
+		<form class="space-y-4" in:fly={{ y: 30, duration: 600 }}>
 			<div>
 				<label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
 				<input 
@@ -52,7 +53,7 @@
 			</button>
 		</form>
 
-		<p class="text-center text-sm text-gray-600 mt-6">
+		<p class="text-center text-sm text-gray-600 mt-6" in:fly={{ y: 30, duration: 600 }}>
 			Belum punya akun? <a href="/register" class="text-blue-600 hover:text-blue-800 font-medium">Daftar sekarang</a>
 		</p>
 	</div>

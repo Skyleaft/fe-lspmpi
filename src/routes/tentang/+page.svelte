@@ -1,10 +1,14 @@
+<script lang="ts">
+	import { fly } from 'svelte/transition';
+</script>
+
 <svelte:head>
 	<title>Tentang Kami - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
 <div class="py-16 bg-white">
 	<div class="max-w-7xl mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ y: 50, duration: 600 }}>
 			<h1 class="text-4xl font-bold text-gray-900 mb-4">Tentang LSP MPI</h1>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Lembaga Sertifikasi Profesi Manajemen Pendidikan Islam yang berkomitmen mengembangkan SDM berkualitas
@@ -12,7 +16,7 @@
 		</div>
 
 		<div class="grid md:grid-cols-2 gap-12 items-center mb-16">
-			<div>
+			<div in:fly={{ x: -50, duration: 600 }}>
 				<h2 class="text-3xl font-bold mb-6">Visi Kami</h2>
 				<p class="text-gray-700 mb-6">
 					Menjadi lembaga sertifikasi profesi terdepan dan terpercaya dalam mengembangkan 
@@ -27,13 +31,13 @@
 					<li>• Membangun jejaring kerjasama dengan berbagai institusi</li>
 				</ul>
 			</div>
-			<div>
+			<div in:fly={{ x: 50, duration: 600 }}>
 				<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&h=400&fit=crop" 
 					 alt="Tentang LSP MPI" class="rounded-lg shadow-lg">
 			</div>
 		</div>
 
-		<div class="bg-gray-50 p-8 rounded-lg">
+		<div class="bg-gray-50 p-8 rounded-lg" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="text-3xl font-bold text-center mb-8">Sejarah LSP MPI</h2>
 			<div class="max-w-4xl mx-auto text-gray-700 space-y-4">
 				<p>

@@ -1,5 +1,6 @@
 <script>
 	import { UserPlus } from '@lucide/svelte';
+	import { fly } from 'svelte/transition';
 </script>
 
 <svelte:head>
@@ -7,7 +8,10 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-	<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl w-full max-w-md p-8">
+	<div 
+		class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl w-full max-w-md p-8"
+		in:fly={{ x: 0, y: 30, duration: 600}}
+	>
 		<div class="text-center mb-6">
 			<h2 class="text-3xl font-bold text-gray-900 mb-2">Daftar</h2>
 			<p class="text-gray-600">Buat akun LSP MPI Anda</p>

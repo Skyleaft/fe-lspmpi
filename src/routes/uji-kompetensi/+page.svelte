@@ -2,16 +2,20 @@
 	<title>Uji Kompetensi - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
+<script>
+	import { fly } from 'svelte/transition';
+</script>
+
 <div class="py-16 bg-white">
 	<div class="max-w-7xl mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ y: 50, duration: 600 }}>
 			<h1 class="text-4xl font-bold text-gray-900 mb-4">Uji Kompetensi</h1>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Ikuti uji kompetensi untuk mendapatkan sertifikat profesi yang diakui
 			</p>
 		</div>
 
-		<div class="bg-blue-50 p-8 rounded-lg mb-12">
+		<div class="bg-blue-50 p-8 rounded-lg mb-12" in:fly={{ y: 30, duration: 600 }}>
 			<h2 class="text-2xl font-bold mb-4">Pendaftaran Batch 13 - 2024</h2>
 			<p class="text-gray-700 mb-4">
 				Pendaftaran untuk batch 13 tahun 2024 telah dibuka. Daftar sekarang dan dapatkan 
@@ -27,7 +31,7 @@
 			</div>
 		</div>
 
-		<div class="grid md:grid-cols-2 gap-8 mb-12">
+		<div class="grid md:grid-cols-2 gap-8 mb-12" in:fly={{ y: 30, duration: 600 }}>
 			<div class="bg-white border border-gray-200 rounded-lg p-6">
 				<h3 class="text-xl font-semibold mb-4">Persyaratan Umum</h3>
 				<ul class="space-y-2 text-gray-700">
@@ -51,7 +55,7 @@
 			</div>
 		</div>
 
-		<div class="bg-gray-50 p-8 rounded-lg">
+		<div class="bg-gray-50 p-8 rounded-lg" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="text-2xl font-bold text-center mb-8">Jadwal Uji Kompetensi 2024</h2>
 			<div class="overflow-x-auto">
 				<table class="w-full bg-white rounded-lg overflow-hidden shadow">

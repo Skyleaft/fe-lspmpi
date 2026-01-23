@@ -2,9 +2,13 @@
 	<title>Karir - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
+<script>
+	import { fly } from 'svelte/transition';
+</script>
+
 <!-- Hero Section -->
 <section class="bg-gradient-to-br from-blue-600 to-purple-700 py-20">
-	<div class="container mx-auto text-center text-white px-4">
+	<div class="container mx-auto text-center text-white px-4" in:fly={{ y: 50, duration: 600 }}>
 		<h1 class="text-4xl md:text-5xl font-bold mb-6">Karir Bersama LSP MPI</h1>
 		<p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
 			Bergabunglah dengan tim profesional kami dan kembangkan karir di bidang sertifikasi profesi
@@ -23,14 +27,14 @@
 <!-- Job Openings -->
 <section id="lowongan" class="py-16 bg-gray-50">
 	<div class="container mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Lowongan Kerja Terbuka</h2>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Temukan posisi yang sesuai dengan keahlian dan minat Anda
 			</p>
 		</div>
 
-		<div class="grid md:grid-cols-3 gap-8 mb-12">
+		<div class="grid md:grid-cols-3 gap-8 mb-12" in:fly={{ y: 30, duration: 600 }}>
 			<div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all">
 				<div class="flex items-center mb-4">
 					<div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4 text-white">
@@ -112,14 +116,14 @@
 <!-- Benefits Section -->
 <section id="benefit" class="py-16 bg-white">
 	<div class="container mx-auto px-4">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Mengapa Berkarir di LSP MPI?</h2>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Bergabunglah dengan organisasi yang menghargai profesionalisme dan pengembangan diri
 			</p>
 		</div>
 
-		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12" in:fly={{ y: 30, duration: 600 }}>
 			<div class="text-center">
 				<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
 					<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,7 +232,7 @@
 
 <!-- CTA Section -->
 <section class="py-16 bg-gray-50">
-	<div class="container mx-auto px-4 text-center">
+	<div class="container mx-auto px-4 text-center" in:fly={{ y: 50, duration: 600 }}>
 		<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Tertarik Bergabung?</h2>
 		<p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
 			Kirimkan CV dan surat lamaran Anda ke email kami atau hubungi tim HR untuk informasi lebih lanjut
