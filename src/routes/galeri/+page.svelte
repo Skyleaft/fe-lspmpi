@@ -1,135 +1,115 @@
 <script lang="ts">
+	import GalleryCard from '$lib/components/ui/GalleryCard.svelte';
 	import { fly } from 'svelte/transition';
+
+	const galleryImages = [
+		'1747312094_WhatsApp Image 2025-05-15 at 13.29.23.webp',
+		'1761203945_WhatsApp Image 2025-10-23 at 13.52.28.webp',
+		'1763357765_WhatsApp Image 2025-11-17 at 05.30.40_3feb6635.webp',
+		'DSC05259.webp',
+		'DSC05293.webp',
+		'DSC05302.webp',
+		'IMG_5596.webp',
+		'IMG_5618.webp',
+		'WhatsApp Image 2025-04-26 at 08.59.54.webp',
+		'WhatsApp Image 2025-04-26 at 09.29.15.webp',
+		'WhatsApp Image 2025-04-26 at 09.29.16.webp',
+		'WhatsApp Image 2025-04-26 at 09.29.17 (1).webp',
+		'WhatsApp Image 2025-04-26 at 09.29.17.webp',
+		'WhatsApp Image 2025-05-14 at 07.28.47.webp',
+		'WhatsApp Image 2025-05-14 at 07.28.48.webp',
+		'WhatsApp Image 2025-05-14 at 13.52.25 (1).webp',
+		'WhatsApp Image 2025-05-14 at 13.52.25.webp',
+		'WhatsApp Image 2025-05-14 at 16.28.18.webp',
+		'WhatsApp Image 2025-05-14 at 16.28.19.webp',
+		'WhatsApp Image 2025-05-14 at 16.28.20.webp'
+	];
+
+	let currentPage = $state(1);
+	const itemsPerPage = 6;
+
+	let totalPages = $derived(Math.ceil(galleryImages.length / itemsPerPage));
+	let startIndex = $derived((currentPage - 1) * itemsPerPage);
+	let endIndex = $derived(startIndex + itemsPerPage);
+	let currentImages = $derived(galleryImages.slice(startIndex, endIndex));
+
+	function goToPage(page: number) {
+		if (page >= 1 && page <= totalPages) {
+			currentPage = page;
+		}
+	}
+
+	function nextPage() {
+		if (currentPage < totalPages) {
+			currentPage++;
+		}
+	}
+
+	function prevPage() {
+		if (currentPage > 1) {
+			currentPage--;
+		}
+	}
 </script>
 
 <svelte:head>
 	<title>Galeri - LSP Manajemen Pendidikan Islam</title>
 </svelte:head>
 
-<div class="py-16 bg-gray-50">
-	<div class="max-w-7xl mx-auto px-4">
-		<div class="text-center mb-12" in:fly={{ x: -50, duration: 600 }}>
-			<h1 class="text-4xl font-bold text-gray-900 mb-4">Galeri LSP MPI</h1>
-			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+<div class="bg-gray-50 py-16">
+	<div class="mx-auto max-w-7xl px-4">
+		<div class="mb-12 text-center" in:fly={{ x: -50, duration: 600 }}>
+			<h1 class="mb-4 text-4xl font-bold text-gray-900">Galeri LSP MPI</h1>
+			<p class="mx-auto max-w-3xl text-xl text-gray-600">
 				Dokumentasi kegiatan dan momen penting dalam perjalanan LSP MPI
 			</p>
 		</div>
 
-		<div class="mb-8" in:fly={{ x: -50, duration: 600, delay: 100 }}>
-			<div class="flex flex-wrap justify-center gap-4">
-				<button data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Semua</button>
-				<button data-ripple-light="true" class="select-none rounded-lg bg-gray-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-700 shadow-md shadow-gray-500/10 transition-all hover:shadow-lg hover:shadow-gray-500/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Sertifikasi</button>
-				<button data-ripple-light="true" class="select-none rounded-lg bg-gray-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-700 shadow-md shadow-gray-500/10 transition-all hover:shadow-lg hover:shadow-gray-500/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Seminar</button>
-				<button data-ripple-light="true" class="select-none rounded-lg bg-gray-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-700 shadow-md shadow-gray-500/10 transition-all hover:shadow-lg hover:shadow-gray-500/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Workshop</button>
-				<button data-ripple-light="true" class="select-none rounded-lg bg-gray-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-700 shadow-md shadow-gray-500/10 transition-all hover:shadow-lg hover:shadow-gray-500/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Pelatihan</button>
-			</div>
+		<div class="grid gap-6 md:grid-cols-3">
+			{#each currentImages as image, index}
+				<GalleryCard
+					src={`/img/galeri/${image}`}
+					alt={`Galeri LSP MPI ${startIndex + index + 1}`}
+					delay={200 + (index * 50)}
+				/>
+			{/each}
 		</div>
 
-		<div class="grid md:grid-cols-3 gap-6">
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 200 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop" 
-						 alt="Sertifikasi Batch 12" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Sertifikasi Batch 12</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Pelaksanaan uji kompetensi batch 12 dengan 150 peserta</p>
-				</div>
+		<div class="mt-12 flex flex-col items-center gap-4" in:fly={{ x: -50, duration: 600, delay: 650 }}>
+			<div class="flex items-center gap-2">
+				<button
+					onclick={prevPage}
+					disabled={currentPage === 1}
+					class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					‹ Sebelumnya
+				</button>
+				
+				{#each Array.from({ length: totalPages }, (_, i) => i + 1) as page}
+					<button
+						onclick={() => goToPage(page)}
+						class="min-w-10 rounded-lg px-3 py-2 text-sm font-medium transition-colors {
+							currentPage === page
+								? 'bg-blue-600 text-white'
+								: 'bg-white text-gray-700 hover:bg-gray-100'
+						}"
+					>
+						{page}
+					</button>
+				{/each}
+				
+				<button
+					onclick={nextPage}
+					disabled={currentPage === totalPages}
+					class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					Selanjutnya ›
+				</button>
 			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 250 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop" 
-						 alt="Seminar Nasional" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Seminar Nasional 2024</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Seminar dengan tema Inovasi Manajemen Pendidikan Islam</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 300 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=300&fit=crop" 
-						 alt="Workshop Asesor" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Workshop Asesor</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Pelatihan peningkatan kompetensi para asesor LSP MPI</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 350 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=300&fit=crop" 
-						 alt="Wisuda Sertifikasi" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Wisuda Sertifikasi</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Penyerahan sertifikat kepada alumni yang lulus uji kompetensi</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 400 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=300&fit=crop" 
-						 alt="Pelatihan Online" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Pelatihan Online</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Sesi pelatihan daring untuk persiapan uji kompetensi</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 450 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" 
-						 alt="Kunjungan Industri" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Kunjungan Industri</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Kunjungan ke lembaga pendidikan Islam terkemuka</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 500 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" 
-						 alt="Rapat Koordinasi" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Rapat Koordinasi</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Koordinasi dengan stakeholder pendidikan Islam</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 550 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop" 
-						 alt="Diskusi Panel" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Diskusi Panel</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Panel diskusi tentang masa depan pendidikan Islam</p>
-				</div>
-			</div>
-
-			<div class="relative flex flex-col bg-white bg-clip-border text-gray-700 shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all" in:fly={{ x: -50, duration: 600, delay: 600 }}>
-				<div class="relative bg-clip-border overflow-hidden bg-white text-gray-700 shadow-lg m-0 rounded-none">
-					<img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&h=300&fit=crop" 
-						 alt="Acara Networking" class="w-full h-48 object-cover">
-				</div>
-				<div class="p-6">
-					<h3 class="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">Acara Networking</h3>
-					<p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">Networking session dengan para profesional pendidikan</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="text-center mt-12" in:fly={{ x: -50, duration: 600, delay: 650 }}>
-			<button data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
-				Muat Lebih Banyak
-			</button>
+			
+			<p class="text-sm text-gray-600">
+				Halaman {currentPage} dari {totalPages} • Menampilkan {startIndex + 1} - {Math.min(endIndex, galleryImages.length)} dari {galleryImages.length} gambar
+			</p>
 		</div>
 	</div>
 </div>

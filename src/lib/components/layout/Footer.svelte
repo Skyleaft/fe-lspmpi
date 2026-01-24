@@ -3,15 +3,10 @@
 		<div class="grid md:grid-cols-4 gap-8">
 			<div>
 				<div class="flex items-center space-x-3 mb-4">
-					<img src="/img/logo-lsp.webp" alt="LSP MPI" class="h-10 w-10" />
-					<div>
-						<h3 class="text-lg font-bold">LSP MPI</h3>
-						<p class="text-sm text-gray-400">Manajemen Pendidikan Islam</p>
-					</div>
+					<img src="/img/logo-lsp.webp" alt="LSP MPI" class="h-10" />
 				</div>
 				<p class="text-gray-400 text-sm mb-4">
-					Lembaga Sertifikasi Profesi terdepan dalam mengembangkan kompetensi 
-					profesional di bidang manajemen pendidikan Islam.
+					LSP Pertama di Indonesia yang focus mensertifikasi kompetensi dan profesi para Manajer Pendidikan Indonesia secara Offline dan Online yang di lengkapi dengan Learning Management System (LMS)
 				</p>
 				<div class="flex space-x-4">
 					<a href="#" class="text-gray-400 hover:text-white">
@@ -64,21 +59,20 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
 						</svg>
 						<span class="text-gray-400">
-							Jl. Pendidikan No. 123<br>
-							Jakarta Selatan 12345
+							Jl. Gedebage Selatan No.137 Kel. Cisaranteun Kidul, Kec. Gedebage, Kota Bandung 40295
 						</span>
 					</div>
 					<div class="flex items-center">
 						<svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
 						</svg>
-						<span class="text-gray-400">(021) 1234-5678</span>
+						<span class="text-gray-400">+62821197042568</span>
 					</div>
 					<div class="flex items-center">
 						<svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 						</svg>
-						<span class="text-gray-400">info@lspmpi.org</span>
+						<span class="text-gray-400">lsp.manajerpendidikan@gmail.com</span>
 					</div>
 				</div>
 			</div>
@@ -86,7 +80,7 @@
 
 		<div class="border-t border-gray-800 mt-8 pt-8 text-center">
 			<p class="text-gray-400 text-sm">
-				© 2024 LSP Manajemen Pendidikan Islam. All rights reserved.
+				© 2026 LSP Manajemen Pendidikan Islam. All rights reserved.
 			</p>
 		</div>
 	</div>
