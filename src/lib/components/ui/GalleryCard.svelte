@@ -13,7 +13,8 @@
 </script>
 
 <div
-	class="group relative h-64 overflow-hidden rounded-xl isolate"
+	class="group relative h-64 overflow-hidden"
+	style="clip-path: inset(0 round 0.75rem);"
 	in:fly={{ x: -50, duration: 600, delay }}
 >
 	<img
@@ -22,7 +23,7 @@
 		class="
 			h-full w-full object-cover
 			transition-transform duration-300 ease-out
-			group-hover:scale-105
+			group-hover:scale-110
 		"
 	/>
 </div>

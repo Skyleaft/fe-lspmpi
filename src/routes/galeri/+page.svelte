@@ -66,7 +66,7 @@
 		</div>
 
 		<div class="grid gap-6 md:grid-cols-3">
-			{#each currentImages as image, index}
+			{#each currentImages as image, index }
 				<GalleryCard
 					src={`/img/galeri/${image}`}
 					alt={`Galeri LSP MPI ${startIndex + index + 1}`}

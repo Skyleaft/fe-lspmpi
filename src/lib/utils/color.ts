@@ -81,7 +81,7 @@ export function makeColorBrighter(rgbColor: string): string {
 	const hsl = rgbToHsl(r, g, b);
 
 	// Increase lightness by 50% (but cap at 90% to avoid pure white)
-	hsl.l = Math.min(hsl.l + 0.5, 0.9);
+	hsl.l = Math.min(hsl.l + 0.7, 0.8);
 
 	// Convert back to RGB
 	const brightRgb = hslToRgb(hsl.h, hsl.s, hsl.l);
