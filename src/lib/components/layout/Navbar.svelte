@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogIn, User, Settings, LogOut, ChevronDown, LayoutDashboard } from '@lucide/svelte';
+	import { LogIn, User, Settings, LogOut, ChevronDown, LayoutDashboard, AlertTriangle } from '@lucide/svelte';
 	
 	let isMenuOpen = $state(false);
 	let isDropdownOpen = $state(false);
@@ -10,6 +10,17 @@
 		avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
 	};
 </script>
+
+<!-- Development Warning Banner -->
+<div class="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white text-center py-2 shadow-lg border-b-2 border-white/20">
+	<div class="max-w-7xl mx-auto px-4 flex items-center justify-center gap-2">
+		<AlertTriangle class="w-5 h-5 animate-pulse flex-shrink-0" />
+		<span class="font-bold text-sm md:text-base tracking-wide">
+			🚧 UNDER DEVELOPMENT - Website masih dalam tahap pengembangan
+		</span>
+		<AlertTriangle class="w-5 h-5 animate-pulse flex-shrink-0" />
+	</div>
+</div>
 
 <nav class="bg-white shadow-lg sticky top-0 z-50">
 	<div class="max-w-7xl mx-auto px-4">
