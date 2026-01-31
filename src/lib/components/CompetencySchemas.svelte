@@ -3,36 +3,36 @@
 	
 	const schemas = [
 		{
-			id: 'kepala-sekolah',
-			name: 'Kepala Sekolah/Madrasah',
-			description: 'Sertifikasi untuk posisi kepemimpinan dalam lembaga pendidikan Islam',
+			id: 'Obtidaiyah',
+			name: 'Sertifikasi Okupasi Kepala Madrasah Obtidaiyah',
+			description: 'Sertifikasi untuk posisi Kepala Madrasah Obtidaiyah',
 			duration: '6 bulan',
 			fee: 2500000,
 			competencies: ['Kepemimpinan Pendidikan', 'Manajemen Lembaga', 'Kurikulum Islam'],
 			image: '/img/1.jpeg'
 		},
 		{
-			id: 'guru-pai',
-			name: 'Guru Pendidikan Agama Islam',
-			description: 'Sertifikasi kompetensi untuk guru PAI di berbagai jenjang',
+			id: 'Tsanawiyah',
+			name: 'Sertifikasi Okupasi Kepala Madrasah Tsanawiyah',
+			description: 'Sertifikasi untuk posisi Kepala Madrasah Tsanawiyah',
 			duration: '4 bulan',
 			fee: 1800000,
 			competencies: ['Pedagogik Islam', 'Metodologi Pembelajaran', 'Evaluasi Pembelajaran'],
 			image: '/img/2.jpeg'
 		},
 		{
-			id: 'administrator',
-			name: 'Administrator Pendidikan',
-			description: 'Sertifikasi untuk tenaga administrasi lembaga pendidikan Islam',
+			id: 'Aliyah',
+			name: 'Sertifikasi Okupasi Kepala Madrasah Aliyah',
+			description: 'Sertifikasi untuk posisi Kepala Madrasah Aliyah',
 			duration: '3 bulan',
 			fee: 1500000,
 			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
 			image: '/img/3.jpeg'
 		},
 		{
-			id: 'administrator2',
-			name: 'Administrator Pendidikan',
-			description: 'Sertifikasi untuk tenaga administrasi lembaga pendidikan Islam',
+			id: 'ptki',
+			name: 'Sertifikasi Okupasi Pimpinan Perguruan Tinggi Keagamaan Islam',
+			description: 'Sertifikasi untuk posisi Pimpinan Perguruan Tinggi Keagamaan Islam',
 			duration: '3 bulan',
 			fee: 1500000,
 			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
@@ -45,7 +45,7 @@
 <section class="py-16 bg-white">
 	<div class="container mx-auto px-4">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Skema Uji Kompetensi di LSP Kami</h2>
+			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Skema Sertifikasi di LSP Kami</h2>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
 				Berbagai skema sertifikasi profesi yang tersedia untuk mengembangkan karir Anda
 			</p>

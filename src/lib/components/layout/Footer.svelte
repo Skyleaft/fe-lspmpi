@@ -6,7 +6,7 @@
 					<img src="/img/logo-lsp.webp" alt="LSP MPI" class="h-10" />
 				</div>
 				<p class="text-gray-400 text-sm mb-4">
-					LSP Pertama di Indonesia yang focus mensertifikasi kompetensi dan profesi para Manajer Pendidikan Indonesia secara Offline dan Online yang di lengkapi dengan Learning Management System (LMS)
+					LSP Pertama di Indonesia yang yang fokus melaksanakan asesmen kompetensi dan profesi manajemen  pendidikan Islam
 				</p>
 				<div class="flex space-x-4">
 					<a href="#" class="text-gray-400 hover:text-white">
@@ -43,10 +43,7 @@
 				<h4 class="text-lg font-semibold mb-4">Layanan</h4>
 				<ul class="space-y-2 text-sm">
 					<li><a href="#" class="text-gray-400 hover:text-white">Sertifikasi Profesi</a></li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Pelatihan</a></li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Konsultasi</a></li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Asesmen</a></li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Verifikasi Sertifikat</a></li>
+					<li><a href="#" class="text-gray-400 hover:text-white">Asesmen kompetensi</a></li>
 				</ul>
 			</div>
 
