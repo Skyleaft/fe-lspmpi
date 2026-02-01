@@ -2,9 +2,14 @@ version: '3.8'
 
 services:
   lsp-mpi:
-    build: .
+    build:
+      context: .
+      args:
+        PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL}
     ports:
       - "3003:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
-    restart: unless-stopped
+    restart: unless-stopped 

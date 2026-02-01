@@ -1,6 +1,9 @@
 
 FROM node:22-alpine AS builder
 
+# Setup build arg for API base URL
+ARG PUBLIC_API_BASE_URL
+
 WORKDIR /app
 
 # Copy package files
@@ -13,7 +16,7 @@ RUN npm install -g pnpm && pnpm install --frozen-lockfile
 COPY . .
 
 # Set environment variables for build
-ENV PUBLIC_API_BASE_URL=http://localhost:5001
+ENV PUBLIC_API_BASE_URL=$PUBLIC_API_BASE_URL
 ENV NODE_ENV=production
 
 # Build application
