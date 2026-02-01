@@ -1,69 +1,82 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import NewsCard from '$lib/components/ui/NewsCard.svelte';
-	import type { NewsItem } from '$lib/types';
+	import type { Article } from '$lib/types';
 	import { onMount, tick } from 'svelte';
+	import { truncateContent, formatDate } from '$lib/utils/text';
 
-	const newsItems: NewsItem[] = [
+	const articles: Article[] = [
 		{
-			id: '1',
+			id: 1,
 			title: 'Seminar Nasional Manajemen Pendidikan Islam 2024',
-			excerpt:
-				'LSP MPI menyelenggarakan seminar nasional dengan tema "Inovasi Manajemen Pendidikan Islam di Era Digital" yang dihadiri oleh 500+ peserta dari seluruh Indonesia...',
 			content: 'LSP MPI dengan bangga mengumumkan penyelenggaraan Seminar Nasional Manajemen Pendidikan Islam 2024 yang akan dilaksanakan pada tanggal 15-16 Maret 2024 di Jakarta Convention Center. Acara ini mengusung tema "Inovasi Manajemen Pendidikan Islam di Era Digital" dan akan dihadiri oleh lebih dari 500 peserta dari berbagai institusi pendidikan Islam di seluruh Indonesia.',
-			date: '15 Januari 2024',
-			link: '/berita/seminar-nasional-mpi-2024',
-			image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-15T08:00:00Z',
+			updatedAt: '2024-01-15T10:00:00Z',
+			isPublished: true,
+			categoryId: 1,
+			thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop',
+			slug: 'seminar-nasional-mpi-2024'
 		},
 		{
-			id: '2',
+			id: 2,
 			title: 'Pembukaan Pendaftaran Sertifikasi Batch 12',
-			excerpt:
-				'Pendaftaran sertifikasi profesi batch 12 telah dibuka untuk berbagai skema kompetensi. Dapatkan kesempatan untuk meningkatkan kompetensi profesional Anda...',
 			content: 'LSP MPI dengan senang hati mengumumkan telah dibukanya pendaftaran sertifikasi profesi batch 12. Program ini ditujukan bagi para profesional di bidang pendidikan Islam yang ingin meningkatkan kompetensi dan kualifikasi profesional mereka.',
-			date: '10 Januari 2024',
-			link: '/berita/pendaftaran-sertifikasi-batch-12',
-			image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-10T09:00:00Z',
+			updatedAt: '2024-01-10T14:30:00Z',
+			isPublished: true,
+			categoryId: 2,
+			thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop',
+			slug: 'pendaftaran-sertifikasi-batch-12'
 		},
 		{
-			id: '3',
+			id: 3,
 			title: 'Workshop Peningkatan Kompetensi Asesor',
-			excerpt:
-				'LSP MPI mengadakan workshop untuk meningkatkan kompetensi para asesor dalam melakukan penilaian yang objektif dan profesional...',
 			content: 'Dalam rangka meningkatkan kualitas penilaian dan sertifikasi, LSP MPI mengadakan workshop peningkatan kompetensi asesor yang akan dilaksanakan pada tanggal 20-22 Februari 2024 di Yogyakarta. Workshop ini ditujukan bagi para asesor yang telah memiliki sertifikat asesor kompetensi namun ingin meningkatkan kemampuan dan keterampilan mereka.',
-			date: '5 Januari 2024',
-			link: '/berita/workshop-peningkatan-kompetensi-asesor',
-			image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-05T07:00:00Z',
+			updatedAt: '2024-01-05T09:15:00Z',
+			isPublished: true,
+			categoryId: 3,
+			thumbnail: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=250&fit=crop',
+			slug: 'workshop-peningkatan-kompetensi-asesor'
 		},
 		{
-			id: '4',
+			id: 4,
 			title: 'MoU dengan Universitas Islam Negeri Jakarta',
-			excerpt:
-				'LSP MPI menandatangani nota kesepahaman dengan UIN Jakarta untuk pengembangan program sertifikasi profesi bagi mahasiswa dan alumni...',
 			content: 'LSP MPI dengan bangga mengumumkan telah menjalin kerjasama strategis dengan Universitas Islam Negeri Jakarta melalui penandatanganan nota kesepahaman (MoU) yang bertujuan untuk pengembangan program sertifikasi profesi bagi mahasiswa dan alumni UIN Jakarta.',
-			date: '28 Desember 2023',
-			link: '#',
-			image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2023-12-28T14:00:00Z',
+			updatedAt: '2023-12-28T16:45:00Z',
+			isPublished: true,
+			categoryId: 4,
+			thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop',
+			slug: 'mou-uin-jakarta'
 		},
 		{
-			id: '5',
+			id: 5,
 			title: 'Pelatihan Manajemen Kurikulum Terintegrasi',
-			excerpt:
-				'Program pelatihan khusus untuk para manajer kurikulum dalam mengintegrasikan nilai-nilai Islam dalam kurikulum pendidikan...',
 			content: 'LSP MPI menyelenggarakan program pelatihan khusus untuk para manajer kurikulum dalam mengintegrasikan nilai-nilai Islam dalam kurikulum pendidikan. Pelatihan ini bertujuan untuk meningkatkan kualitas pendidikan Islam di seluruh Indonesia.',
-			date: '20 Desember 2023',
-			link: '#',
-			image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2023-12-20T08:30:00Z',
+			updatedAt: '2023-12-20T11:30:00Z',
+			isPublished: true,
+			categoryId: 5,
+			thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop',
+			slug: 'pelatihan-manajemen-kurikulum'
 		},
 		{
-			id: '6',
+			id: 6,
 			title: 'LSP MPI Raih Penghargaan Best Practice 2023',
-			excerpt:
-				'LSP MPI meraih penghargaan Best Practice dalam kategori Lembaga Sertifikasi Profesi Terbaik dari Kementerian Pendidikan...',
 			content: 'LSP MPI dengan bangga mengumumkan telah meraih penghargaan Best Practice dalam kategori Lembaga Sertifikasi Profesi Terbaik dari Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.',
-			date: '15 Desember 2023',
-			link: '#',
-			image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2023-12-15T10:00:00Z',
+			updatedAt: '2023-12-15T13:20:00Z',
+			isPublished: true,
+			categoryId: 6,
+			thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop',
+			slug: 'penghargaan-best-practice-2023'
 		}
 	];
 
@@ -90,9 +103,17 @@
 
 		<div class="grid gap-8 md:grid-cols-3">
 			{#if show}
-				{#each newsItems as news, index (news.id)}
-					<NewsCard {news} delay={100 + index * 50} />
-				{/each}
+				{#each articles as news (news.id)}
+				<NewsCard
+					title={news.title}
+					excerpt={truncateContent(news.content, 120)}
+					imageSrc={news.thumbnail || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop'}
+					imageAlt={news.title}
+					date={formatDate(news.updatedAt)}
+					href={`/berita/${news.slug}`}
+					delay={100 + (news.id === 1 ? 0 : news.id === 2 ? 100 : 200)}
+				/>
+			{/each}
 			{/if}
 		</div>
 

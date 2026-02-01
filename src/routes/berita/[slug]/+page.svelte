@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { NewsItem } from '$lib/types';
+	import type { Article } from '$lib/types';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
+	import { formatDate } from '$lib/utils/text';
 
 	// Data berita statis untuk contoh
-	const newsData: Record<string, NewsItem> = {
+	const newsData: Record<string, Article> = {
 		'seminar-nasional-mpi-2024': {
-			id: '1',
+			id: 1,
 			title: 'Seminar Nasional Manajemen Pendidikan Islam 2024',
-			excerpt: 'LSP MPI menyelenggarakan seminar nasional dengan tema "Inovasi Manajemen Pendidikan Islam di Era Digital" yang dihadiri oleh 500+ peserta dari seluruh Indonesia...',
 			content: `
 				<p>LSP MPI dengan bangga mengumumkan penyelenggaraan Seminar Nasional Manajemen Pendidikan Islam 2024 yang akan dilaksanakan pada tanggal 15-16 Maret 2024 di Jakarta Convention Center. Acara ini mengusung tema "Inovasi Manajemen Pendidikan Islam di Era Digital" dan akan dihadiri oleh lebih dari 500 peserta dari berbagai institusi pendidikan Islam di seluruh Indonesia.</p>
 				
@@ -36,14 +36,17 @@
 					<li>Materi seminar dalam bentuk digital</li>
 				</ul>
 			`,
-			date: '15 Januari 2024',
-			link: '/berita/seminar-nasional-mpi-2024',
-			image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-15T08:00:00Z',
+			updatedAt: '2024-01-15T10:00:00Z',
+			isPublished: true,
+			categoryId: 1,
+			thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop',
+			slug: 'seminar-nasional-mpi-2024'
 		},
 		'pendaftaran-sertifikasi-batch-12': {
-			id: '2',
+			id: 2,
 			title: 'Pembukaan Pendaftaran Sertifikasi Batch 12',
-			excerpt: 'Pendaftaran sertifikasi profesi batch 12 telah dibuka untuk berbagai skema kompetensi. Dapatkan kesempatan untuk meningkatkan kompetensi profesional Anda...',
 			content: `
 				<p>LSP MPI dengan senang hati mengumumkan telah dibukanya pendaftaran sertifikasi profesi batch 12. Program ini ditujukan bagi para profesional di bidang pendidikan Islam yang ingin meningkatkan kompetensi dan kualifikasi profesional mereka.</p>
 				
@@ -69,14 +72,17 @@
 				<h3>Proses Pendaftaran</h3>
 				<p>Pendaftaran dapat dilakukan secara online melalui website resmi LSP MPI. Peserta diharapkan melengkapi seluruh dokumen yang diperlukan dan membayar biaya pendaftaran sesuai dengan ketentuan yang berlaku.</p>
 			`,
-			date: '10 Januari 2024',
-			link: '/berita/pendaftaran-sertifikasi-batch-12',
-			image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-10T09:00:00Z',
+			updatedAt: '2024-01-10T14:30:00Z',
+			isPublished: true,
+			categoryId: 2,
+			thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop',
+			slug: 'pendaftaran-sertifikasi-batch-12'
 		},
 		'workshop-peningkatan-kompetensi-asesor': {
-			id: '3',
+			id: 3,
 			title: 'Workshop Peningkatan Kompetensi Asesor',
-			excerpt: 'LSP MPI mengadakan workshop untuk meningkatkan kompetensi para asesor dalam melakukan penilaian yang objektif dan profesional...',
 			content: `
 				<p>Dalam rangka meningkatkan kualitas penilaian dan sertifikasi, LSP MPI mengadakan workshop peningkatan kompetensi asesor yang akan dilaksanakan pada tanggal 20-22 Februari 2024 di Yogyakarta. Workshop ini ditujukan bagi para asesor yang telah memiliki sertifikat asesor kompetensi namun ingin meningkatkan kemampuan dan keterampilan mereka.</p>
 				
@@ -98,19 +104,114 @@
 					<li>Latihan praktik</li>
 				</ul>
 			`,
-			date: '5 Januari 2024',
-			link: '/berita/workshop-peningkatan-kompetensi-asesor',
-			image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&h=400&fit=crop'
+			author: 'LSP MPI',
+			createdAt: '2024-01-05T07:00:00Z',
+			updatedAt: '2024-01-05T09:15:00Z',
+			isPublished: true,
+			categoryId: 3,
+			thumbnail: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&h=400&fit=crop',
+			slug: 'workshop-peningkatan-kompetensi-asesor'
+		},
+		'mou-uin-jakarta': {
+			id: 4,
+			title: 'MoU dengan Universitas Islam Negeri Jakarta',
+			content: `
+				<p>LSP MPI dengan bangga mengumumkan telah menjalin kerjasama strategis dengan Universitas Islam Negeri Jakarta melalui penandatanganan nota kesepahaman (MoU) yang bertujuan untuk pengembangan program sertifikasi profesi bagi mahasiswa dan alumni UIN Jakarta.</p>
+				
+				<h3>Tujuan Kerjasama</h3>
+				<p>Kerjasama ini bertujuan untuk:</p>
+				<ul>
+					<li>Menyediakan program sertifikasi profesi bagi mahasiswa UIN Jakarta</li>
+					<li>Meningkatkan kompetensi lulusan UIN Jakarta di dunia kerja</li>
+					<li>Mengembangkan kurikulum yang terintegrasi dengan kebutuhan industri</li>
+					<li>Menyediakan peluang magang dan kerja bagi lulusan UIN Jakarta</li>
+				</ul>
+				
+				<h3>Manfaat Bagi Mahasiswa</h3>
+				<p>Mahasiswa UIN Jakarta akan mendapatkan berbagai manfaat, antara lain:</p>
+				<ul>
+					<li>Akses ke program sertifikasi profesi dengan biaya terjangkau</li>
+					<li>Pelatihan dan pendampingan dalam proses sertifikasi</li>
+					<li>Sertifikat kompetensi yang diakui secara nasional</li>
+					<li>Jaringan profesional dengan dunia industri</li>
+				</ul>
+			`,
+			author: 'LSP MPI',
+			createdAt: '2023-12-28T14:00:00Z',
+			updatedAt: '2023-12-28T16:45:00Z',
+			isPublished: true,
+			categoryId: 4,
+			thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=400&fit=crop',
+			slug: 'mou-uin-jakarta'
+		},
+		'pelatihan-manajemen-kurikulum': {
+			id: 5,
+			title: 'Pelatihan Manajemen Kurikulum Terintegrasi',
+			content: `
+				<p>LSP MPI menyelenggarakan program pelatihan khusus untuk para manajer kurikulum dalam mengintegrasikan nilai-nilai Islam dalam kurikulum pendidikan. Pelatihan ini bertujuan untuk meningkatkan kualitas pendidikan Islam di seluruh Indonesia.</p>
+				
+				<h3>Target Peserta</h3>
+				<p>Pelatihan ini ditujukan bagi:</p>
+				<ul>
+					<li>Kepala sekolah dan madrasah</li>
+					<li>Koordinator kurikulum</li>
+					<li>Guru mata pelajaran agama Islam</li>
+					<li>Pengawas pendidikan</li>
+				</ul>
+				
+				<h3>Materi Pelatihan</h3>
+				<p>Materi pelatihan mencakup:</p>
+				<ul>
+					<li>Prinsip-prinsip kurikulum berbasis nilai Islam</li>
+					<li>Strategi integrasi nilai Islam dalam pembelajaran</li>
+					<li>Penyusunan silabus dan RPP berbasis nilai Islam</li>
+					<li>Penilaian pembelajaran berbasis nilai Islam</li>
+					<li>Manajemen implementasi kurikulum terintegrasi</li>
+				</ul>
+			`,
+			author: 'LSP MPI',
+			createdAt: '2023-12-20T08:30:00Z',
+			updatedAt: '2023-12-20T11:30:00Z',
+			isPublished: true,
+			categoryId: 5,
+			thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=400&fit=crop',
+			slug: 'pelatihan-manajemen-kurikulum'
+		},
+		'penghargaan-best-practice-2023': {
+			id: 6,
+			title: 'LSP MPI Raih Penghargaan Best Practice 2023',
+			content: `
+				<p>LSP MPI dengan bangga mengumumkan telah meraih penghargaan Best Practice dalam kategori Lembaga Sertifikasi Profesi Terbaik dari Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.</p>
+				
+				<h3>Prestasi yang Dicapai</h3>
+				<p>Penghargaan ini diberikan atas berbagai prestasi LSP MPI, antara lain:</p>
+				<ul>
+					<li>Kualitas pelaksanaan sertifikasi yang konsisten</li>
+					<li>Inovasi dalam metode penilaian kompetensi</li>
+					<li>Kerjasama strategis dengan berbagai institusi pendidikan</li>
+					<li>Kontribusi dalam pengembangan SDM di bidang pendidikan Islam</li>
+				</ul>
+				
+				<h3>Komitmen LSP MPI</h3>
+				<p>LSP MPI berkomitmen untuk terus meningkatkan kualitas layanan dan berkontribusi dalam pengembangan pendidikan Islam di Indonesia. Penghargaan ini menjadi motivasi untuk terus berinovasi dan memberikan pelayanan terbaik bagi seluruh stakeholder.</p>
+			`,
+			author: 'LSP MPI',
+			createdAt: '2023-12-15T10:00:00Z',
+			updatedAt: '2023-12-15T13:20:00Z',
+			isPublished: true,
+			categoryId: 6,
+			thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop',
+			slug: 'penghargaan-best-practice-2023'
 		}
 	};
 
-	let news: NewsItem | null = null;
+	let news: Article | null = null;
 	let isLoading = true;
 	let error = false;
 
 	onMount(() => {
 		const slug = get(page).params.slug;
-		const newsItem = newsData[slug];
+		const newsItem = slug ? newsData[slug] : null;
 		
 		if (newsItem) {
 			news = newsItem;
@@ -124,12 +225,12 @@
 <svelte:head>
 	{#if news}
 		<title>{news.title} - LSP Manajemen Pendidikan Islam</title>
-		<meta name="description" content={news.excerpt} />
+		<meta name="description" content={news.content.substring(0, 160)} />
 		<meta property="og:title" content={news.title} />
-		<meta property="og:description" content={news.excerpt} />
-		<meta property="og:image" content={news.image} />
+		<meta property="og:description" content={news.content.substring(0, 160)} />
+		<meta property="og:image" content={news.thumbnail} />
 		<meta property="og:type" content="article" />
-		<meta property="article:published_time" content={news.date} />
+		<meta property="article:published_time" content={news.createdAt} />
 	{/if}
 </svelte:head>
 
@@ -174,7 +275,7 @@
 			<article class="space-y-8" in:fly={{ x: -50, duration: 600, delay: 100 }}>
 				<div class="relative overflow-hidden rounded-lg">
 					<img 
-						src={news.image} 
+						src={news.thumbnail} 
 						alt={news.title}
 						class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105"
 					/>
@@ -185,9 +286,9 @@
 				</div>
 
 				<div class="space-y-4">
-					<time class="text-sm text-gray-500">{news.date}</time>
+					<time class="text-sm text-gray-500">{formatDate(news.updatedAt)}</time>
 					<h1 class="text-3xl font-bold text-gray-900 md:text-4xl">{news.title}</h1>
-					<p class="text-lg text-gray-600">{news.excerpt}</p>
+					<p class="text-lg text-gray-600">{news.content.substring(0, 160)}...</p>
 				</div>
 
 				<div class="prose prose-lg max-w-none">

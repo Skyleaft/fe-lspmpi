@@ -8,6 +8,19 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
+	import { authStore } from '$lib/stores/auth';
+
+	import { onMount } from 'svelte';
+	// @ts-ignore
+	import { initMaterialTailwind } from '@material-tailwind/html';
+
+
+	onMount(async () => {
+		initMaterialTailwind(); // Initialize all components
+
+		// Check if user is already authenticated
+		await authStore.checkAuth();
+	});
 
 	let { children } = $props();
 
@@ -28,7 +41,7 @@
 {#if !$page.url.pathname.startsWith('/dashboard')}
 	<Navbar />
 {/if}
-{#if $page.url.pathname.startsWith('/dashboard')}
+{#if $page.url.pathname.startsWith('/dashboard') && $authStore.isAuthenticated}
 	<Sidebar />
 {/if}
 <main class="page-transition">

@@ -1,14 +1,25 @@
 <script lang="ts">
 	import { LogIn, User, Settings, LogOut, ChevronDown, LayoutDashboard, AlertTriangle } from '@lucide/svelte';
+	import { authStore } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
 	
 	let isMenuOpen = $state(false);
 	let isDropdownOpen = $state(false);
-	let isLoggedIn = $state(false); // Ubah ke true untuk testing mode logged in
 	
-	const user = {
-		name: 'Ahmad Fauzi',
+	// Get user data from auth store
+	let user = $derived($authStore.user);
+	let profilePhotoUrl = $derived($authStore.profilePhotoUrl);
+	
+	// Fallback data for when user is not authenticated
+	const defaultUser = {
+		name: 'Guest',
 		avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
 	};
+
+	async function handleLogout() {
+		await authStore.logout();
+		goto('/');
+	}
 </script>
 
 <!-- Development Warning Banner -->
@@ -39,14 +50,14 @@
 				<a href="/galeri" class="px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors">Galeri</a>
 				<a href="/kontak" class="px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors">Kontak</a>
 				
-				{#if isLoggedIn}
+				{#if $authStore.isAuthenticated}
 					<div class="relative">
 						<button 
 							class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-md transition-colors"
 							onclick={() => isDropdownOpen = !isDropdownOpen}
 						>
-							<img src={user.avatar} alt={user.name} class="w-8 h-8 rounded-full" />
-							<span class="text-gray-700 font-medium">{user.name}</span>
+							<img src={profilePhotoUrl || defaultUser.avatar} alt={user?.profileName || defaultUser.name} class="w-8 h-8 rounded-full" />
+							<span class="text-gray-700 font-medium">{user?.profileName || defaultUser.name}</span>
 							<ChevronDown class="w-4 h-4 text-gray-500" />
 						</button>
 						
@@ -65,7 +76,7 @@
 									<span>Pengaturan</span>
 								</button>
 								<hr class="my-1 border-gray-200" />
-								<button class="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors">
+								<button class="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors" onclick={handleLogout}>
 									<LogOut class="w-4 h-4" />
 									<span>Logout</span>
 								</button>
@@ -103,11 +114,11 @@
 				<a href="/galeri" class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors">Galeri</a>
 				<a href="/kontak" class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors">Kontak</a>
 				
-				{#if isLoggedIn}
+				{#if $authStore.isAuthenticated}
 					<div class="border-t border-gray-200 pt-2 mt-2">
 						<div class="flex items-center gap-2 px-3 py-2">
-							<img src={user.avatar} alt={user.name} class="w-8 h-8 rounded-full" />
-							<span class="text-gray-700 font-medium">{user.name}</span>
+							<img src={profilePhotoUrl || defaultUser.avatar} alt={user?.profileName || defaultUser.name} class="w-8 h-8 rounded-full" />
+							<span class="text-gray-700 font-medium">{user?.profileName || defaultUser.name}</span>
 						</div>
 						<a href="/dashboard" class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
 							<LayoutDashboard class="w-4 h-4" />

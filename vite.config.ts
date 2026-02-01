@@ -6,7 +6,15 @@ import { sveltekit } from '@sveltejs/kit/vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
-
+	server: {
+		proxy: {
+			'/api': {
+				target: 'http://localhost:5001',
+				changeOrigin: true,
+				secure: false
+			}
+		}
+	},
 	test: {
 		expect: { requireAssertions: true },
 
