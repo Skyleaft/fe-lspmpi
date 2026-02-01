@@ -12,6 +12,10 @@ RUN npm install -g pnpm && pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
+# Set environment variables for build
+ENV PUBLIC_API_BASE_URL=http://localhost:5001
+ENV NODE_ENV=production
+
 # Build application
 RUN pnpm build
 
