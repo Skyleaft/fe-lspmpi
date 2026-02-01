@@ -7,7 +7,7 @@
 		<div class="text-center mb-12" in:fly={{ x: -50, duration: 600 }}>
 			<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Mengapa Pilih Kami?</h2>
 			<p class="text-xl text-gray-600 max-w-3xl mx-auto">
-				LSP MPI berkomitmen memberikan layanan sertifikasi profesi terbaik dengan standar internasional
+				LSP Manajemen Pendidikan Islam berkomitmen memberikan layanan asesmen kompetensi dan sertifikasi profesi terbaik berstandar nasional dan berwawasan global
 			</p>
 		</div>
 
