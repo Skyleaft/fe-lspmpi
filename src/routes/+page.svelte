@@ -5,6 +5,7 @@
 	import AlumniReviews from '$lib/components/AlumniReviews.svelte';
 	import NewsSection from '$lib/components/NewsSection.svelte';
 	import SchemaData from '$lib/components/SchemaData.svelte';
+	import AssessorList from '$lib/components/AssessorList.svelte';
 </script>
 
 <svelte:head>
@@ -18,7 +19,9 @@
 
 <HeroSection />
 <WhyChooseUs />
+
 <CompetencySchemas />
 <AlumniReviews />
+<AssessorList />
 <NewsSection />
 <SchemaData />

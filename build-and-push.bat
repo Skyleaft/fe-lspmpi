@@ -2,11 +2,12 @@
 set IMAGE_NAME=fe-lspmpi
 set TAG=latest
 set REGISTRY=11.1.1.4:5000
+set PUBLIC_API_BASE_URL="https://lspmpi.id"
 
 echo ===============================
 echo Build Docker Image
 echo ===============================
-docker build -t %IMAGE_NAME%:%TAG% .
+docker build --build-arg PUBLIC_API_BASE_URL=%PUBLIC_API_BASE_URL% -t %IMAGE_NAME%:%TAG% .
 if errorlevel 1 goto error
 
 echo ===============================
