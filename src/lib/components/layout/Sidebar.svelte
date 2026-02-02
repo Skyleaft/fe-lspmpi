@@ -106,6 +106,13 @@
 				<Settings class="h-5 w-5" />
 				<span>Pengaturan</span>
 			</a>
+			<a
+				href="/dashboard/manajemen-akun"
+				class="flex items-center space-x-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-50"
+			>
+				<User class="h-5 w-5" />
+				<span>Manajemen Akun</span>
+			</a>
             <a
 				href="/"
 				class="flex items-center space-x-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-50"

@@ -106,12 +106,70 @@ export interface Article {
 	isPublished: boolean;
 	categoryId: number;
 	thumbnail?: string|null;
+	articleTagMappings?: ArticleTagMapping[];
 }
 
 export interface ArticleCategory {
 	id: number;
 	name: string;
+	slug?: string | null;
+	description?: string | null;
+	createdAt: string;
+	updatedAt: string;
+	articles?: Article[];
 }
+
+export interface ArticleCategoryPaginatedResponse {
+	data: ArticleCategory[];
+	totalCount: number;
+	page: number;
+	pageSize: number;
+	totalPages?: number;
+}
+
+export interface CreateArticleCategoryDto {
+	name: string;
+	description?: string | null;
+}
+
+export interface UpdateArticleCategoryDto {
+	name: string;
+	description?: string | null;
+}
+
+// API Response interfaces
+export interface FindRequest {
+	search?: string;
+	page: number;
+	pageSize: number;
+	sort?: string;
+	order?: string;
+	filter?: string;
+}
+
+export interface PaginatedResponse<T> {
+	data: T[];
+	totalCount: number;
+	page: number;
+	pageSize: number;
+}
+
+export interface CreateArticleRequest {
+	title: string;
+	categoryId: number;
+	content?: string;
+	author?: string;
+	thumbnail?: string;
+}
+
+export interface UpdateArticleRequest {
+	title: string;
+	categoryId: number;
+	content?: string;
+	thumbnail?: string;
+	isPublished: boolean;
+}
+
 
 export interface CreateArticleDto {
 	title: string;
@@ -129,6 +187,32 @@ export interface UpdateArticleDto {
 	isPublished: boolean;
 }
 
+export interface CreateArticleWithThumbnailDto {
+	title: string;
+	content?: string | null;
+	author?: string | null;
+	categoryId: number;
+	thumbnail?: string | null;
+	thumbnailFile?: File;
+}
+
+export interface ArticlePaginatedResponse {
+	data: Article[];
+	totalCount: number;
+	page: number;
+	pageSize: number;
+	totalPages?: number;
+}
+
+export interface PhotoUploadRequest {
+	photo?: File;
+}
+
+export interface PhotoUploadResponse {
+	fileName: string;
+	message: string;
+}
+
 export interface CreateArticleCategoryDto {
 	name: string;
 }
@@ -137,25 +221,79 @@ export interface UpdateArticleCategoryDto {
 	name: string;
 }
 
-export interface FindRequest {
-	search?: string;
-	page?: number;
-	pageSize?: number;
-	sort?: string;
-	order?: string;
-	filter?: string;
+export interface ArticleTag {
+	id: number;
+	name: string;
+	description: string;
+	createdAt: string;
+	updatedAt: string;
+	articleTagMappings: ArticleTagMapping[];
 }
 
-export interface PaginatedResponseArticle {
-	data: Article[];
+export interface ArticleTagMapping {
+	articleId: number;
+	article: Article;
+	articleTagId: number;
+	articleTag: ArticleTag;
+}
+
+export interface ArticleTagPaginatedResponse {
+	data: ArticleTag[];
 	totalCount: number;
 	page: number;
 	pageSize: number;
+	totalPages?: number;
 }
 
-export interface PaginatedResponseArticleCategory {
-	data: ArticleCategory[];
-	totalCount: number;
-	page: number;
-	pageSize: number;
+export interface CreateArticleTagDto {
+	name: string;
+	description?: string;
+}
+
+export interface UpdateArticleTagDto {
+	name: string;
+	description?: string;
+}
+
+// User API calls
+export interface User {
+    id: string;
+    username: string;
+    roleId: number;
+    role: {
+        id: number;
+        name: string;
+        level: number;
+    };
+    userProfile: {
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+        address: string;
+        city: string;
+        profilePicture: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+    isActivated: boolean;
+}
+
+export interface CreateUserRequest {
+    username: string;
+    password: string;
+    name: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    city?: string;
+    roleId: number;
+}
+export interface UpdateUserRequest {
+    username: string;
+    name: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    city?: string;
 }

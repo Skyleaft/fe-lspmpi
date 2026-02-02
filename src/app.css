@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
 
 @theme {
   --color-primary: #2190E4;
