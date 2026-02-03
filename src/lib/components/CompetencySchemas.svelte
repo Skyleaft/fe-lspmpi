@@ -16,7 +16,7 @@
 			name: 'Sertifikasi Okupasi Kepala Madrasah Tsanawiyah',
 			description: 'Sertifikasi untuk posisi Kepala Madrasah Tsanawiyah',
 			duration: '4 bulan',
-			fee: 1800000,
+			fee: 2500000,
 			competencies: ['Pedagogik Islam', 'Metodologi Pembelajaran', 'Evaluasi Pembelajaran'],
 			image: '/img/2.jpeg'
 		},
@@ -25,7 +25,7 @@
 			name: 'Sertifikasi Okupasi Kepala Madrasah Aliyah',
 			description: 'Sertifikasi untuk posisi Kepala Madrasah Aliyah',
 			duration: '3 bulan',
-			fee: 1500000,
+			fee: 2500000,
 			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
 			image: '/img/3.jpeg'
 		},
@@ -34,7 +34,7 @@
 			name: 'Sertifikasi Okupasi Pimpinan Perguruan Tinggi Keagamaan Islam',
 			description: 'Sertifikasi untuk posisi Pimpinan Perguruan Tinggi Keagamaan Islam',
 			duration: '3 bulan',
-			fee: 1500000,
+			fee: 2500000,
 			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
 			image: '/img/4.jpeg'
 		}
