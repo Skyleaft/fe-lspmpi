@@ -1,5 +1,6 @@
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import { dev } from '$app/environment';
+import { browser } from '$app/environment';
 import type { 
     FindRequest, 
     PaginatedResponse, 
@@ -18,25 +19,24 @@ import type {
     ArticleTag,
     Article,
     ArticlePaginatedResponse,
-    CreateArticleDto,
-    UpdateArticleDto,
     CreateArticleWithThumbnailDto,
-    PhotoUploadRequest,
-    PhotoUploadResponse
+    PhotoUploadResponse,
+    CompetencySchema,
+    CompetencySchemaResponse
 } from '$lib/types';
 
 export const API_BASE_URL = PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
 // Use relative URLs for same-origin requests (works with proxy)
 export function buildApiUrl(path: string): string {
-    // For development with Vite proxy, use relative URLs
-    // For production, use absolute URLs from environment
-    if (dev) {
-        // Use relative paths that get proxied by Vite
+    // For development with Vite proxy, use relative URLs for client-side requests
+    // For server-side requests or production, use absolute URLs
+    if (dev && browser) {
+        // Use relative paths that get proxied by Vite (client-side only)
         return path.startsWith('/') ? path : `/${path}`;
     }
 
-    // Use absolute URLs for production
+    // Use absolute URLs for server-side requests and production
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
     return `${API_BASE_URL}/${cleanPath}`;
 }
@@ -484,6 +484,86 @@ export async function uploadProfilePhoto(file: File): Promise<{ fileName: string
 
     if (!response.ok) {
         throw new Error(`Failed to upload profile photo: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+// Competency Schema API functions
+export async function findCompetencySchemas(params: FindRequest = { page: 1, pageSize: 10, search: '' }): Promise<CompetencySchemaResponse> {
+    const dummySchemas: CompetencySchema[] = [
+        {
+            id: 1,
+            name: 'Sertifikasi Okupasi Kepala Madrasah Obtidaiyah',
+            description: 'Sertifikasi untuk posisi Kepala Madrasah Obtidaiyah',
+            duration: '6 bulan',
+            fee: 2500000,
+            competencies: ['Kepemimpinan Pendidikan', 'Manajemen Lembaga', 'Kurikulum Islam'],
+            image: '/img/1.jpeg'
+        },
+        {
+            id: 2,
+            name: 'Sertifikasi Okupasi Kepala Madrasah Tsanawiyah',
+            description: 'Sertifikasi untuk posisi Kepala Madrasah Tsanawiyah',
+            duration: '4 bulan',
+            fee: 2500000,
+            competencies: ['Pedagogik Islam', 'Metodologi Pembelajaran', 'Evaluasi Pembelajaran'],
+            image: '/img/2.jpeg'
+        },
+        {
+            id: 3,
+            name: 'Sertifikasi Okupasi Kepala Madrasah Aliyah',
+            description: 'Sertifikasi untuk posisi Kepala Madrasah Aliyah',
+            duration: '3 bulan',
+            fee: 2500000,
+            competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
+            image: '/img/3.jpeg'
+        },
+        {
+            id: 4,
+            name: 'Sertifikasi Okupasi Pimpinan Perguruan Tinggi Keagamaan Islam',
+            description: 'Sertifikasi untuk posisi Pimpinan Perguruan Tinggi Keagamaan Islam',
+            duration: '3 bulan',
+            fee: 2500000,
+            competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
+            image: '/img/4.jpeg'
+        }
+    ];
+
+    let filteredSchemas = dummySchemas;
+    if (params.search) {
+        filteredSchemas = dummySchemas.filter(schema => 
+            schema.name.toLowerCase().includes(params.search!.toLowerCase()) ||
+            schema.description.toLowerCase().includes(params.search!.toLowerCase())
+        );
+    }
+
+    const startIndex = (params.page - 1) * params.pageSize;
+    const endIndex = startIndex + params.pageSize;
+    const paginatedData = filteredSchemas.slice(startIndex, endIndex);
+
+    return {
+        data: paginatedData,
+        totalCount: filteredSchemas.length,
+        totalPages: Math.ceil(filteredSchemas.length / params.pageSize),
+        currentPage: params.page
+    };
+}
+
+export async function getCompetencySchema(id: number): Promise<CompetencySchema | null> {
+    const response = await findCompetencySchemas();
+    return response.data.find(schema => schema.id === id) || null;
+}
+
+// Get latest articles API
+export async function getLatestArticles(): Promise<Article[]> {
+    const response = await fetch(buildApiUrl('/api/articles/latest'), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to get latest articles: ${response.status} ${response.statusText}`);
     }
 
     return response.json();

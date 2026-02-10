@@ -1,89 +1,75 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import NewsCard from '$lib/components/ui/NewsCard.svelte';
-	import type { Article } from '$lib/types';
+	import type { Article, FindRequest, ArticlePaginatedResponse } from '$lib/types';
 	import { onMount, tick } from 'svelte';
 	import { truncateContent, formatDate } from '$lib/utils/text';
+	import { findArticles } from '$lib/utils/api';
 
-	const articles: Article[] = [
-		{
-			id: 1,
-			title: 'Seminar Nasional Manajemen Pendidikan Islam 2024',
-			content: 'LSP MPI dengan bangga mengumumkan penyelenggaraan Seminar Nasional Manajemen Pendidikan Islam 2024 yang akan dilaksanakan pada tanggal 15-16 Maret 2024 di Jakarta Convention Center. Acara ini mengusung tema "Inovasi Manajemen Pendidikan Islam di Era Digital" dan akan dihadiri oleh lebih dari 500 peserta dari berbagai institusi pendidikan Islam di seluruh Indonesia.',
-			author: 'LSP MPI',
-			createdAt: '2024-01-15T08:00:00Z',
-			updatedAt: '2024-01-15T10:00:00Z',
-			isPublished: true,
-			categoryId: 1,
-			thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop',
-			slug: 'seminar-nasional-mpi-2024'
-		},
-		{
-			id: 2,
-			title: 'Pembukaan Pendaftaran Sertifikasi Batch 12',
-			content: 'LSP MPI dengan senang hati mengumumkan telah dibukanya pendaftaran sertifikasi profesi batch 12. Program ini ditujukan bagi para profesional di bidang pendidikan Islam yang ingin meningkatkan kompetensi dan kualifikasi profesional mereka.',
-			author: 'LSP MPI',
-			createdAt: '2024-01-10T09:00:00Z',
-			updatedAt: '2024-01-10T14:30:00Z',
-			isPublished: true,
-			categoryId: 2,
-			thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop',
-			slug: 'pendaftaran-sertifikasi-batch-12'
-		},
-		{
-			id: 3,
-			title: 'Workshop Peningkatan Kompetensi Asesor',
-			content: 'Dalam rangka meningkatkan kualitas penilaian dan sertifikasi, LSP MPI mengadakan workshop peningkatan kompetensi asesor yang akan dilaksanakan pada tanggal 20-22 Februari 2024 di Yogyakarta. Workshop ini ditujukan bagi para asesor yang telah memiliki sertifikat asesor kompetensi namun ingin meningkatkan kemampuan dan keterampilan mereka.',
-			author: 'LSP MPI',
-			createdAt: '2024-01-05T07:00:00Z',
-			updatedAt: '2024-01-05T09:15:00Z',
-			isPublished: true,
-			categoryId: 3,
-			thumbnail: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&h=250&fit=crop',
-			slug: 'workshop-peningkatan-kompetensi-asesor'
-		},
-		{
-			id: 4,
-			title: 'MoU dengan Universitas Islam Negeri Jakarta',
-			content: 'LSP MPI dengan bangga mengumumkan telah menjalin kerjasama strategis dengan Universitas Islam Negeri Jakarta melalui penandatanganan nota kesepahaman (MoU) yang bertujuan untuk pengembangan program sertifikasi profesi bagi mahasiswa dan alumni UIN Jakarta.',
-			author: 'LSP MPI',
-			createdAt: '2023-12-28T14:00:00Z',
-			updatedAt: '2023-12-28T16:45:00Z',
-			isPublished: true,
-			categoryId: 4,
-			thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop',
-			slug: 'mou-uin-jakarta'
-		},
-		{
-			id: 5,
-			title: 'Pelatihan Manajemen Kurikulum Terintegrasi',
-			content: 'LSP MPI menyelenggarakan program pelatihan khusus untuk para manajer kurikulum dalam mengintegrasikan nilai-nilai Islam dalam kurikulum pendidikan. Pelatihan ini bertujuan untuk meningkatkan kualitas pendidikan Islam di seluruh Indonesia.',
-			author: 'LSP MPI',
-			createdAt: '2023-12-20T08:30:00Z',
-			updatedAt: '2023-12-20T11:30:00Z',
-			isPublished: true,
-			categoryId: 5,
-			thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop',
-			slug: 'pelatihan-manajemen-kurikulum'
-		},
-		{
-			id: 6,
-			title: 'LSP MPI Raih Penghargaan Best Practice 2023',
-			content: 'LSP MPI dengan bangga mengumumkan telah meraih penghargaan Best Practice dalam kategori Lembaga Sertifikasi Profesi Terbaik dari Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.',
-			author: 'LSP MPI',
-			createdAt: '2023-12-15T10:00:00Z',
-			updatedAt: '2023-12-15T13:20:00Z',
-			isPublished: true,
-			categoryId: 6,
-			thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop',
-			slug: 'penghargaan-best-practice-2023'
-		}
-	];
-
+	let articles: Article[] = [];
+	let loading = true;
+	let error: string | null = null;
+	let currentPage = 1;
+	let totalPages = 1;
+	let totalArticles = 0;
+	let searchQuery = '';
 	let show = false;
 
+	// Fetch articles with pagination
+	async function fetchArticles(page: number = 1) {
+		loading = true;
+		error = null;
+		
+		try {
+			const params: FindRequest = {
+				page: page,
+				pageSize: 9,
+				search: searchQuery || undefined
+			};
+			
+			const response: ArticlePaginatedResponse = await findArticles(params);
+			articles = response.data || [];
+			currentPage = response.page || page;
+			totalPages = Math.ceil((response.totalCount || 0) / params.pageSize);
+			totalArticles = response.totalCount || 0;
+		} catch (err) {
+			error = 'Gagal memuat berita';
+			console.error('Error fetching articles:', err);
+		} finally {
+			loading = false;
+		}
+	}
+
+	// Handle search
+	async function handleSearch() {
+		currentPage = 1;
+		await fetchArticles(1);
+	}
+
+	// Handle pagination
+	async function goToPage(page: number) {
+		if (page >= 1 && page <= totalPages && page !== currentPage) {
+			await fetchArticles(page);
+		}
+	}
+
+	// Handle next page
+	async function nextPage() {
+		if (currentPage < totalPages) {
+			await fetchArticles(currentPage + 1);
+		}
+	}
+
+	// Handle previous page
+	async function prevPage() {
+		if (currentPage > 1) {
+			await fetchArticles(currentPage - 1);
+		}
+	}
+
 	onMount(async () => {
-		await tick(); // penting!
+		await fetchArticles(1);
+		await tick();
 		show = true;
 	});
 </script>
@@ -101,29 +87,99 @@
 			</p>
 		</div>
 
-		<div class="grid gap-8 md:grid-cols-3">
-			{#if show}
-				{#each articles as news (news.id)}
-				<NewsCard
-					title={news.title}
-					excerpt={truncateContent(news.content, 120)}
-					imageSrc={news.thumbnail || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop'}
-					imageAlt={news.title}
-					date={formatDate(news.updatedAt)}
-					href={`/berita/${news.slug}`}
-					delay={100 + (news.id === 1 ? 0 : news.id === 2 ? 100 : 200)}
+		<!-- Search Section -->
+		<div class="mb-8 flex justify-center">
+			<div class="relative w-full max-w-md">
+				<input
+					type="text"
+					bind:value={searchQuery}
+					on:input={handleSearch}
+					placeholder="Cari berita..."
+					class="w-full rounded-lg border border-gray-300 px-4 py-2 pl-10 focus:border-blue-500 focus:outline-none"
 				/>
-			{/each}
-			{/if}
+				<svg
+					class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+				</svg>
+			</div>
 		</div>
 
-		<div class="mt-12 text-center" in:fly={{ x: -50, duration: 600, delay: 400 }}>
-			<button
-				data-ripple-light="true"
-				class="rounded-lg bg-blue-600 px-8 py-3 text-center align-middle font-sans text-sm font-bold text-white uppercase shadow-md shadow-blue-500/20 transition-all select-none hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-			>
-				Muat Berita Lainnya
-			</button>
-		</div>
+		<!-- Articles Grid -->
+		{#if loading}
+			<div class="grid gap-8 md:grid-cols-3">
+				{#each [1, 2, 3] as _}
+					<div class="animate-pulse">
+						<div class="aspect-video w-full rounded-lg bg-gray-300"></div>
+						<div class="mt-4 space-y-3">
+							<div class="h-4 w-3/4 rounded bg-gray-300"></div>
+							<div class="h-4 w-full rounded bg-gray-300"></div>
+							<div class="h-4 w-1/2 rounded bg-gray-300"></div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else if error}
+			<div class="col-span-3 text-center text-red-600">
+				{error}
+			</div>
+		{:else if articles.length === 0}
+			<div class="col-span-3 text-center text-gray-500">
+				Belum ada berita yang ditemukan
+			</div>
+		{:else}
+			<div class="grid gap-8 md:grid-cols-3">
+				{#each articles as news (news.id)}
+					<NewsCard
+						title={news.title}
+						excerpt={truncateContent(news.content, 120)}
+						imageSrc={'/api/articles/thumbnail/'+news.thumbnail || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop'}
+						imageAlt={news.title}
+						date={formatDate(news.updatedAt)}
+						href={`/berita/${news.slug}`}
+						delay={100 + (news.id === 1 ? 0 : news.id === 2 ? 100 : 200)}
+					/>
+				{/each}
+			</div>
+		{/if}
+
+		<!-- Pagination -->
+		{#if totalPages > 1}
+			<div class="mt-12 flex items-center justify-center gap-4" in:fly={{ x: -50, duration: 600, delay: 400 }}>
+				<button
+					on:click={prevPage}
+					disabled={currentPage === 1}
+					class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					Sebelumnya
+				</button>
+				
+				<div class="flex gap-2">
+					{#each Array.from({ length: totalPages }, (_, i) => i + 1) as page}
+						<button
+							on:click={() => goToPage(page)}
+							class="min-w-10 rounded-lg px-3 py-2 text-sm font-medium transition-colors {
+								currentPage === page
+									? 'bg-blue-600 text-white'
+									: 'bg-white text-gray-700 hover:bg-gray-100'
+							}"
+						>
+							{page}
+						</button>
+					{/each}
+				</div>
+				
+				<button
+					on:click={nextPage}
+					disabled={currentPage === totalPages}
+					class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					Selanjutnya
+				</button>
+			</div>
+		{/if}
 	</div>
 </div>

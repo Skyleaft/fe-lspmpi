@@ -6,6 +6,8 @@
 	import NewsSection from '$lib/components/NewsSection.svelte';
 	import SchemaData from '$lib/components/SchemaData.svelte';
 	import AssessorList from '$lib/components/AssessorList.svelte';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -23,5 +25,5 @@
 <CompetencySchemas />
 <AlumniReviews />
 <AssessorList />
-<NewsSection />
+<NewsSection articles={data.articles} />
 <SchemaData />

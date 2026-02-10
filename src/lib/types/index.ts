@@ -16,16 +16,6 @@ export interface ClaimUser {
     profileName: string | null;
 }
 
-export interface SchemaItem {
-	id: string;
-	name: string;
-	description: string;
-	duration: string;
-	fee: number;
-	competencies: string[];
-	image?: string;
-}
-
 export interface Role {
     id: number;
     name?: string | null;
@@ -105,7 +95,7 @@ export interface Article {
 	updatedAt: string;
 	isPublished: boolean;
 	categoryId: number;
-	thumbnail?: string|null;
+	thumbnail?: string | null;
 	articleTagMappings?: ArticleTagMapping[];
 }
 
@@ -296,4 +286,41 @@ export interface UpdateUserRequest {
     phone?: string;
     address?: string;
     city?: string;
+}
+
+export interface CompetencySchema {
+	id: number;
+	name: string;
+	description: string;
+	duration: string;
+	fee: number;
+	competencies: string[];
+	image: string;
+	createdAt?: string;
+	updatedAt?: string;
+}
+
+export interface CompetencySchemaResponse {
+	data: CompetencySchema[];
+	totalCount: number;
+	totalPages: number;
+	currentPage: number;
+}
+
+export interface CreateCompetencySchemaDto {
+	name: string;
+	description: string;
+	duration: string;
+	fee: number;
+	competencies: string[];
+	image?: string;
+}
+
+export interface UpdateCompetencySchemaDto {
+	name?: string;
+	description?: string;
+	duration?: string;
+	fee?: number;
+	competencies?: string[];
+	image?: string;
 }

@@ -373,6 +373,31 @@
         }
       }
     },
+    "/api/articles/latest": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "GetLatest Article",
+        "description": "Retrieve Latest Article",
+        "operationId": "GetLatest Article",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/articles/{id}": {
       "get": {
         "tags": [
@@ -982,6 +1007,203 @@
         }
       }
     },
+    "/api/competency-schemas/find": {
+      "post": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Find competency schemas",
+        "description": "Search competency schemas with criteria",
+        "operationId": "FindCompetencySchemas",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetencySchemaPaginatedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/competency-schemas": {
+      "get": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Get all competency schemas",
+        "description": "Retrieve all competency schemas",
+        "operationId": "GetAllCompetencySchemas",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetencySchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Create new competency schema",
+        "description": "Create a new competency schema",
+        "operationId": "CreateCompetencySchema",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetencySchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetencySchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/competency-schemas/{id}": {
+      "get": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Get competency schema by ID",
+        "description": "Retrieve competency schema by ID",
+        "operationId": "GetCompetencySchema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetencySchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Update competency schema",
+        "description": "Update competency schema information",
+        "operationId": "UpdateCompetencySchema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetencySchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetencySchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CompetencySchemas"
+        ],
+        "summary": "Delete competency schema",
+        "description": "Delete competency schema",
+        "operationId": "DeleteCompetencySchema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/users/find": {
       "post": {
         "tags": [
@@ -1504,6 +1726,78 @@
         },
         "additionalProperties": false
       },
+      "CompetencySchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "fee": {
+            "type": "number",
+            "format": "double"
+          },
+          "competencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetencySchemaPaginatedResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompetencySchema"
+            },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateArticleCategoryDto": {
         "required": [
           "name"
@@ -1981,6 +2275,9 @@
     },
     {
       "name": "be-lspmpi"
+    },
+    {
+      "name": "CompetencySchemas"
     },
     {
       "name": "Users"

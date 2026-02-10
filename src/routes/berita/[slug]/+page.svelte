@@ -1,34 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { findArticleBySlug, getArticleCategory } from '$lib/utils/api';
 	import type { Article, ArticleCategory } from '$lib/types';
 
-	let article: Article | null = null;
-	let category: ArticleCategory | null = null;
-	let loading = true;
-	let error = '';
+	export let data: { article: Article; category: ArticleCategory | null };
 
-	onMount(async () => {
-		const slug = $page.params.slug;
-		if (slug) {
-			await loadArticle(slug);
-		}
-	});
-
-	async function loadArticle(slug: string) {
-		try {
-			loading = true;
-			article = await findArticleBySlug(slug);
-			if (article) {
-				category = await getArticleCategory(article.categoryId);
-			}
-		} catch (err: any) {
-			error = 'Artikel tidak ditemukan';
-		} finally {
-			loading = false;
-		}
-	}
+	$: article = data.article;
+	$: category = data.category;
 
 	function formatDate(dateString: string) {
 		const date = new Date(dateString);
@@ -47,17 +23,7 @@
 
 <div class="min-h-screen bg-gray-50">
 	<div class="container mx-auto px-4 py-8 max-w-4xl">
-		{#if loading}
-			<div class="flex justify-center items-center h-64">
-				<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-			</div>
-		{:else if error}
-			<div class="text-center py-16">
-				<h1 class="text-2xl font-bold text-gray-900 mb-4">Artikel Tidak Ditemukan</h1>
-				<p class="text-gray-600">{error}</p>
-			</div>
-		{:else if article}
-			<article class="bg-white rounded-lg shadow-lg overflow-hidden">
+		<article class="bg-white rounded-lg shadow-lg overflow-hidden">
 				{#if article.thumbnail && article.thumbnail.trim()}
 					<div class="aspect-video w-full">
 						<img 
@@ -107,7 +73,6 @@
 					{/if}
 				</div>
 			</article>
-		{/if}
 	</div>
 </div>
 

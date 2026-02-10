@@ -1,45 +1,15 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { findCompetencySchemas } from '$lib/utils/api';
+	import type { CompetencySchema } from '$lib/types';
 	import SchemaCard from './ui/SchemaCard.svelte';
 	
-	const schemas = [
-		{
-			id: 'Obtidaiyah',
-			name: 'Sertifikasi Okupasi Kepala Madrasah Obtidaiyah',
-			description: 'Sertifikasi untuk posisi Kepala Madrasah Obtidaiyah',
-			duration: '6 bulan',
-			fee: 2500000,
-			competencies: ['Kepemimpinan Pendidikan', 'Manajemen Lembaga', 'Kurikulum Islam'],
-			image: '/img/1.jpeg'
-		},
-		{
-			id: 'Tsanawiyah',
-			name: 'Sertifikasi Okupasi Kepala Madrasah Tsanawiyah',
-			description: 'Sertifikasi untuk posisi Kepala Madrasah Tsanawiyah',
-			duration: '4 bulan',
-			fee: 2500000,
-			competencies: ['Pedagogik Islam', 'Metodologi Pembelajaran', 'Evaluasi Pembelajaran'],
-			image: '/img/2.jpeg'
-		},
-		{
-			id: 'Aliyah',
-			name: 'Sertifikasi Okupasi Kepala Madrasah Aliyah',
-			description: 'Sertifikasi untuk posisi Kepala Madrasah Aliyah',
-			duration: '3 bulan',
-			fee: 2500000,
-			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
-			image: '/img/3.jpeg'
-		},
-		{
-			id: 'ptki',
-			name: 'Sertifikasi Okupasi Pimpinan Perguruan Tinggi Keagamaan Islam',
-			description: 'Sertifikasi untuk posisi Pimpinan Perguruan Tinggi Keagamaan Islam',
-			duration: '3 bulan',
-			fee: 2500000,
-			competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
-			image: '/img/4.jpeg'
-		}
-		
-	];
+	let schemas: CompetencySchema[] = [];
+
+	onMount(async () => {
+		const response = await findCompetencySchemas({ page: 1, pageSize: 4, search: '' });
+		schemas = response.data;
+	});
 </script>
 
 <section class="py-16 bg-white">
@@ -53,7 +23,7 @@
 
 		<div class="grid md:grid-cols-2  lg:grid-cols-4 gap-6">
 			{#each schemas as schema (schema.id)}
-				<SchemaCard {schema} delay={schema.id === 'kepala-sekolah' ? 0 : schema.id === 'guru-pai' ? 100 : schema.id === 'administrator' ? 200 : schema.id === 'konselor' ? 300 : schema.id === 'pengawas' ? 400 : 500} />
+				<SchemaCard {schema} delay={schema.id === 1 ? 0 : schema.id === 2 ? 100 : schema.id === 3 ? 200 : schema.id === 4 ? 300 : schema.id === 5 ? 400 : 500} />
 			{/each}
 		</div>
 

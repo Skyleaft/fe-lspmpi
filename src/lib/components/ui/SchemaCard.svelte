@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import type { SchemaItem } from '../../types';
+	import type { CompetencySchema } from '../../types';
 	import { extractDominantColor } from '../../utils/color';
 
-	export let schema: SchemaItem;
+	export let schema: CompetencySchema;
 	export let delay: number = 0;
 	export let dominantColor: string = '#ffffff';
 
