@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Users, Shield, Mail, Calendar, Edit, Trash2, Plus } from '@lucide/svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { getUsers, createUser, updateUser as updateUserApi, deleteUser as deleteUserApi } from '$lib/utils/api';
 
@@ -118,23 +118,7 @@
 </svelte:head>
 
 <!-- Main Content -->
-<div class="p-6">
-	<!-- Header -->
-	<header class="mb-8">
-		<div class="flex items-center justify-between">
-			<div>
-				<h1 class="text-3xl font-bold text-gray-900">Manajemen Akun</h1>
-				<p class="mt-1 text-gray-600">Kelola pengguna dan hak akses sistem</p>
-			</div>
-			<button 
-				onclick={addUser}
-				class="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
-			>
-				<Plus class="h-5 w-5" />
-				<span>Tambah Pengguna</span>
-			</button>
-		</div>
-	</header>
+<div class="p-4">
 
 	<!-- Stats Grid -->
 	<div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -159,6 +143,16 @@
 			</div>
 		{/each}
 	</div>
+
+	<div class="flex items-center justify-end mb-4">
+			<button 
+				onclick={addUser}
+				class="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+			>
+				<Plus class="h-5 w-5" />
+				<span>Tambah Pengguna</span>
+			</button>
+		</div>
 
 	<!-- Users Table -->
 	<div class="rounded-lg border border-gray-100 bg-white shadow-md">
@@ -240,8 +234,8 @@
 
 <!-- Add User Modal -->
 {#if showAddModal}
-	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ x: 0, y: 20, duration: 300 }}>
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" transition:fade={{ duration: 200 }}>
+		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ y: 20, duration: 300 }}>
 			<h3 class="mb-4 text-lg font-semibold">Tambah Pengguna Baru</h3>
 			<form onsubmit={handleAddSubmit}>
 				<div class="space-y-4">
@@ -272,6 +266,7 @@
 				</div>
 				<div class="mt-6 flex justify-end space-x-3">
 					<button 
+						type="button"
 						onclick={() => showAddModal = false}
 						class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
 					>
@@ -291,8 +286,8 @@
 
 <!-- Edit User Modal -->
 {#if showEditModal && selectedUser}
-	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ x: 0, y: 20, duration: 300 }}>
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" transition:fade={{ duration: 200 }}>
+		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ y: 20, duration: 300 }}>
 			<h3 class="mb-4 text-lg font-semibold">Edit Pengguna</h3>
 			<form onsubmit={handleEditSubmit}>
 				<div class="space-y-4">
@@ -319,6 +314,7 @@
 				</div>
 				<div class="mt-6 flex justify-end space-x-3">
 					<button 
+						type="button"
 						onclick={() => showEditModal = false}
 						class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
 					>
@@ -338,18 +334,20 @@
 
 <!-- Delete Confirmation Modal -->
 {#if showDeleteModal && selectedUser}
-	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ x: 0, y: 20, duration: 300 }}>
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" transition:fade={{ duration: 200 }}>
+		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl" transition:fly={{ y: 20, duration: 300 }}>
 			<h3 class="mb-4 text-lg font-semibold">Hapus Pengguna</h3>
 			<p class="text-gray-600">Anda yakin ingin menghapus pengguna <strong>{selectedUser.name}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
 			<div class="mt-6 flex justify-end space-x-3">
 				<button 
+					type="button"
 					onclick={() => showDeleteModal = false}
 					class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
 				>
 					Batal
 				</button>
 				<button 
+					type="button"
 					onclick={confirmDelete}
 					class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
 				>

@@ -1,15 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { findArticleCategories, findArticleTags, createArticle, updateArticle, uploadThumbnail, createArticleWithThumbnail } from '$lib/utils/api';
-	import type { Article, ArticleCategory, ArticleTag, CreateArticleWithThumbnailDto } from '$lib/types';
+	import {
+		findArticleCategories,
+		findArticleTags,
+		createArticle,
+		updateArticle,
+		uploadThumbnail,
+		createArticleWithThumbnail
+	} from '$lib/utils/api';
+	import type {
+		Article,
+		ArticleCategory,
+		ArticleTag,
+		CreateArticleWithThumbnailDto
+	} from '$lib/types';
 	import QuillEditor from './QuillEditor.svelte';
-
-	interface ArticleModalProps {
-		article?: Article | null;
-		isOpen: boolean;
-		onClose: () => void;
-		onSave: () => void;
-	}
+	import { fly, fade } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	let { article = null, isOpen = false, onClose, onSave } = $props();
 	let title = $state('');
@@ -42,13 +49,23 @@
 			content = article.content || '';
 			isPublished = article.isPublished || false;
 			thumbnailPreview = article.thumbnail || '';
+		} else {
+			title = '';
+			slug = '';
+			categoryId = '';
+			selectedTags = [];
+			content = '';
+			isPublished = false;
+			thumbnailFile = null;
+			thumbnailPreview = '';
 		}
 	});
 
 	// Generate slug from title
 	$effect(() => {
-		if (title) {
-			slug = title.toLowerCase()
+		if (title && !article) {
+			slug = title
+				.toLowerCase()
 				.replace(/[^a-z0-9]+/g, '-')
 				.replace(/^-+|-+$/g, '');
 		}
@@ -109,8 +126,8 @@
 				content,
 				isPublished,
 				categoryId: Number(categoryId),
-				tagIds: selectedTags,
-				thumbnail:""
+				tagIds: selectedTags.map((id) => Number(id)),
+				thumbnail: ''
 			};
 
 			let articleId: string;
@@ -129,7 +146,6 @@
 						title: title.trim(),
 						content,
 						categoryId: Number(categoryId),
-						tagIds: selectedTags,
 						thumbnailFile
 					};
 					await createArticleWithThumbnail(dto);
@@ -156,71 +172,88 @@
 </script>
 
 {#if isOpen}
-	<div class="fixed inset-0 z-50 overflow-y-auto">
-		<div class="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
-			<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" on:click={closeModal}></div>
+	<div class="fixed inset-0 z-50 overflow-y-auto" transition:fade={{ duration: 200 }}>
+		<div
+			class="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+		>
+			<div
+				class="bg-opacity-50 fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+				onclick={closeModal}
+				transition:fade={{ duration: 200 }}
+			></div>
 
-			<div class="relative inline-block transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+			<div
+				class="relative inline-block transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl"
+				transition:fly={{ y: 20, duration: 300, easing: cubicOut }}
+			>
 				<div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
 					<h3 class="text-lg font-medium text-gray-900">
 						{article ? 'Edit Artikel' : 'Tambah Artikel'}
 					</h3>
 					<button
-						on:click={closeModal}
-						class="rounded-md text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						onclick={closeModal}
+						class="rounded-md text-gray-400 transition-colors duration-200 hover:text-gray-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
 					>
 						<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M6 18L18 6M6 6l12 12"
+							/>
 						</svg>
 					</button>
 				</div>
 
 				<div class="space-y-6 p-6">
 					{#if error}
-						<div class="rounded-md bg-red-50 p-4">
+						<div
+							class="rounded-md border border-red-200 bg-red-50 p-4"
+							transition:fade={{ duration: 200 }}
+						>
 							<div class="text-sm text-red-700">{error}</div>
 						</div>
 					{/if}
 
 					<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 						<div class="sm:col-span-2">
-							<label class="block text-sm font-medium text-gray-700">Judul</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Judul</label>
 							<input
 								type="text"
 								bind:value={title}
-								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 								placeholder="Masukkan judul artikel"
 							/>
 						</div>
 
 						<div>
-							<label class="block text-sm font-medium text-gray-700">Slug</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Slug</label>
 							<input
 								type="text"
 								bind:value={slug}
-								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 								placeholder="Masukkan slug artikel"
 							/>
 						</div>
 
 						<div>
-							<label class="block text-sm font-medium text-gray-700">Kategori</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Kategori</label>
 							<select
 								bind:value={categoryId}
-								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 							>
 								<option value="">Pilih kategori</option>
 								{#each categories as category (category.id)}
-									<option value={category.id}>{category.name}</option>
+									<option value={String(category.id)}>{category.name}</option>
 								{/each}
 							</select>
 						</div>
 
 						<div>
-							<label class="block text-sm font-medium text-gray-700">Status</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Status</label>
 							<select
 								bind:value={isPublished}
-								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 							>
 								<option value={false}>Draft</option>
 								<option value={true}>Published</option>
@@ -228,23 +261,25 @@
 						</div>
 
 						<div class="sm:col-span-2">
-							<label class="block text-sm font-medium text-gray-700">Tags</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Tags</label>
 							<div class="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
 								{#each tags as tag (tag.id)}
-									<label class="inline-flex items-center">
+									<label
+										class="inline-flex items-center transition-all duration-200 hover:scale-105"
+									>
 										<input
 											type="checkbox"
 											value={tag.id}
 											checked={selectedTags.includes(tag.id)}
-											on:change={(e) => {
+											onchange={(e) => {
 												const target = e.target as HTMLInputElement;
 												if (target.checked) {
 													selectedTags = [...selectedTags, tag.id];
 												} else {
-													selectedTags = selectedTags.filter(id => id !== tag.id);
+													selectedTags = selectedTags.filter((id) => id !== tag.id);
 												}
 											}}
-											class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+											class="rounded border-gray-300 text-blue-600 transition-colors duration-200 focus:ring-blue-500"
 										/>
 										<span class="ml-2 text-sm text-gray-700">{tag.name}</span>
 									</label>
@@ -253,42 +288,49 @@
 						</div>
 
 						<div class="sm:col-span-2">
-							<label class="block text-sm font-medium text-gray-700">Thumbnail</label>
+							<label class="mb-1 block text-sm font-medium text-gray-700">Thumbnail</label>
 							<div class="mt-1 flex items-center space-x-4">
 								{#if thumbnailPreview}
-									<img src={thumbnailPreview} alt="Thumbnail Preview" class="h-20 w-20 rounded object-cover" />
+									<div class="group relative">
+										<img
+											src={thumbnailPreview}
+											alt="Thumbnail Preview"
+											class="h-20 w-20 rounded object-cover shadow-md transition-transform duration-300 group-hover:scale-110"
+										/>
+										<div
+											class="bg-opacity-0 group-hover:bg-opacity-20 absolute inset-0 rounded transition-all duration-300"
+										></div>
+									</div>
 								{/if}
 								<input
 									type="file"
 									accept="image/*"
-									on:change={handleThumbnailChange}
-									class="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
+									onchange={handleThumbnailChange}
+									class="block w-full text-sm text-gray-500 transition-colors duration-200 file:mr-4 file:rounded file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
 								/>
 							</div>
 						</div>
 					</div>
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700">Konten</label>
-						<QuillEditor
-							bind:value={content}
-						/>
+						<label class="mb-1 block text-sm font-medium text-gray-700">Konten</label>
+						<QuillEditor bind:value={content} />
 					</div>
 				</div>
 
 				<div class="flex justify-end space-x-3 border-t border-gray-200 bg-gray-50 px-6 py-4">
 					<button
-						on:click={closeModal}
-						class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						onclick={closeModal}
+						class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
 					>
 						Batal
 					</button>
 					<button
-						on:click={saveArticle}
+						onclick={saveArticle}
 						disabled={isSaving}
-						class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+						class="transform rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:translate-y-[-2px] hover:bg-blue-700 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					>
-						{isSaving ? 'Menyimpan...' : (article ? 'Update' : 'Simpan')}
+						{isSaving ? 'Menyimpan...' : article ? 'Update' : 'Simpan'}
 					</button>
 				</div>
 			</div>
@@ -299,5 +341,38 @@
 <style>
 	.quill-editor {
 		min-height: 400px;
+	}
+
+	/* Custom transition for modal content */
+	:global(.svelte-modal-enter) {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	:global(.svelte-modal-enter-active) {
+		transition:
+			opacity 200ms ease-out,
+			transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+
+	:global(.svelte-modal-enter-to) {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	:global(.svelte-modal-leave) {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	:global(.svelte-modal-leave-active) {
+		transition:
+			opacity 200ms ease-in,
+			transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+
+	:global(.svelte-modal-leave-to) {
+		opacity: 0;
+		transform: translateY(20px);
 	}
 </style>

@@ -2,7 +2,8 @@
 	import { authStore } from '$lib/stores/auth';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import type { UserData, ClaimUser } from '$lib/types';
+	import type { ClaimUser } from '$lib/types';
+	import DashboardHeader from '$lib/components/layout/DashboardHeader.svelte';
 
 	let { children } = $props();
 
@@ -29,6 +30,7 @@
 
 {#if isAuthenticated && !isLoading}
 	<main class="dashboard-content">
+		<DashboardHeader />
 		{@render children?.()}
 	</main>
 {:else if isLoading}

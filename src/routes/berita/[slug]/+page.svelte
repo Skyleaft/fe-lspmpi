@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Article, ArticleCategory } from '$lib/types';
+	import { ChevronRight } from '@lucide/svelte';
 
 	export let data: { article: Article; category: ArticleCategory | null };
 
@@ -22,7 +23,26 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-	<div class="container mx-auto px-4 py-8 max-w-4xl">
+	<div class="container mx-auto px-4 py-8 max-w-5xl">
+		<!-- Breadcrumb -->
+		<nav class="mb-6" aria-label="Breadcrumb">
+			<ol class="flex items-center space-x-2 text-sm text-gray-600">
+				<li>
+					<a href="/" class="hover:text-blue-600 transition-colors">Beranda</a>
+				</li>
+				<li>
+					<ChevronRight class="w-4 h-4 text-gray-400" />
+				</li>
+				<li>
+					<a href="/berita" class="hover:text-blue-600 transition-colors">Berita</a>
+				</li>
+				<li>
+					<ChevronRight class="w-4 h-4 text-gray-400" />
+				</li>
+				<li class="text-gray-900 font-medium">{article?.title || 'Artikel'}</li>
+			</ol>
+		</nav>
+
 		<article class="bg-white rounded-lg shadow-lg overflow-hidden">
 				{#if article.thumbnail && article.thumbnail.trim()}
 					<div class="aspect-video w-full">
@@ -58,19 +78,6 @@
 					<div class="prose max-w-none">
 						{@html article.content}
 					</div>
-
-					{#if article.tags && article.tags.length > 0}
-						<div class="mt-8 pt-6 border-t border-gray-200">
-							<h3 class="text-sm font-medium text-gray-900 mb-3">Tags:</h3>
-							<div class="flex flex-wrap gap-2">
-								{#each article.tags as tag}
-									<span class="inline-block bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">
-										{tag.name}
-									</span>
-								{/each}
-							</div>
-						</div>
-					{/if}
 				</div>
 			</article>
 	</div>
