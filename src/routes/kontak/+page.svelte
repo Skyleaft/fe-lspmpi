@@ -1,9 +1,14 @@
 <script>
 	import { fly } from 'svelte/transition';
+	import { siteSettings } from '$lib/stores/siteSettings';
 </script>
 
 <svelte:head>
-	<title>Kontak - LSP Manajemen Pendidikan Islam</title>
+	<title>Kontak - {$siteSettings.siteName || 'LSP Manajemen Pendidikan Islam'}</title>
+	<meta
+		name="description"
+		content="Hubungi kami untuk informasi lebih lanjut mengenai sertifikasi profesi di bidang manajemen pendidikan Islam."
+	/>
 </svelte:head>
 
 <div class="bg-white py-16">
@@ -45,8 +50,8 @@
 						<div>
 							<h3 class="mb-1 font-semibold">Alamat Kantor</h3>
 							<p class="text-gray-600">
-								Jl. Gedebage Selatan No.137 Kel. Cisaranteun Kidul, Kec. Gedebage, Kota Bandung
-								40295
+								{$siteSettings.siteAddress ||
+									'Jl. Gedebage Selatan No.137 Kel. Cisaranteun Kidul, Kec. Gedebage, Kota Bandung 40295'}
 							</p>
 						</div>
 					</div>
@@ -69,7 +74,7 @@
 						</div>
 						<div>
 							<h3 class="mb-1 font-semibold">Telepon</h3>
-							<p class="text-gray-600">+6282119704256</p>
+							<p class="text-gray-600">{$siteSettings.sitePhone || '+6282119704256'}</p>
 						</div>
 					</div>
 
@@ -91,7 +96,9 @@
 						</div>
 						<div>
 							<h3 class="mb-1 font-semibold">Email</h3>
-							<p class="text-gray-600">lsp.manajerpendidikan@gmail.com</p>
+							<p class="text-gray-600">
+								{$siteSettings.siteEmail || 'lsp.manajerpendidikan@gmail.com'}
+							</p>
 						</div>
 					</div>
 
@@ -193,15 +200,15 @@
 		<div class="mt-16" in:fly={{ y: 50, duration: 600 }}>
 			<h2 class="mb-8 text-center text-2xl font-bold">Lokasi Kami</h2>
 			<div class="flex h-96 items-center justify-center rounded-lg bg-gray-200">
-				<div class="mapouter w-full h-full">
+				<div class="mapouter h-full w-full">
 					<iframe
-							class="w-full h-full rounded-lg"
-							src="https://maps.google.com/maps?q=Jl.+Gedebage+Selatan+No.137&t=&z=13&ie=UTF8&iwloc=&output=embed"
-							scrolling="no"
-							allowfullscreen
-							loading="lazy"
-							referrerpolicy="no-referrer-when-downgrade"
-						></iframe>
+						class="h-full w-full rounded-lg"
+						src="https://maps.google.com/maps?q=Jl.+Gedebage+Selatan+No.137&t=&z=13&ie=UTF8&iwloc=&output=embed"
+						scrolling="no"
+						allowfullscreen
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade"
+					></iframe>
 				</div>
 			</div>
 		</div>

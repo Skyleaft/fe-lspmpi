@@ -6,18 +6,19 @@
 	import NewsSection from '$lib/components/NewsSection.svelte';
 	import SchemaData from '$lib/components/SchemaData.svelte';
 	import AssessorList from '$lib/components/AssessorList.svelte';
+	import { siteSettings } from '$lib/stores/siteSettings';
 
 	export let data;
 </script>
 
 <svelte:head>
-	<title>LSP Manajemen Pendidikan Islam - Beranda</title>
+	<title>{$siteSettings.siteName || 'LSP Manajemen Pendidikan Islam'} - Beranda</title>
 	<meta
 		name="description"
-		content="Lembaga Sertifikasi Profesi terdepan dalam mengembangkan kompetensi profesional di bidang manajemen pendidikan Islam yang berkualitas dan terpercaya."
+		content={$siteSettings.siteDescription ||
+			'Lembaga Sertifikasi Profesi terdepan dalam mengembangkan kompetensi profesional di bidang manajemen pendidikan Islam yang berkualitas dan terpercaya.'}
 	/>
 </svelte:head>
-
 
 <HeroSection />
 <WhyChooseUs />

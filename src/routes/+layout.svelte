@@ -9,11 +9,21 @@
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
 	import { authStore } from '$lib/stores/auth';
+	import { siteSettings } from '$lib/stores/siteSettings';
 
 	import { onMount } from 'svelte';
 	// @ts-ignore
 	import { initMaterialTailwind } from '@material-tailwind/html';
 
+	// Receive server data from +layout.server.ts
+	let { data, children } = $props();
+
+	// Initialize site settings store with server-loaded data
+	$effect(() => {
+		if (data?.siteSettings) {
+			siteSettings.init(data.siteSettings);
+		}
+	});
 
 	onMount(async () => {
 		initMaterialTailwind(); // Initialize all components
@@ -21,8 +31,6 @@
 		// Check if user is already authenticated
 		await authStore.checkAuth();
 	});
-
-	let { children } = $props();
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;

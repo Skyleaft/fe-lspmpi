@@ -1204,6 +1204,78 @@
         }
       }
     },
+    "/api/settings": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Get public web settings",
+        "description": "Retrieve public web settings (excludes sensitive data)",
+        "operationId": "GetWebSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebSettingPublic"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Update web settings",
+        "description": "Update web settings",
+        "operationId": "UpdateWebSettings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebSetting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/settings/admin": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Get all web settings (admin only)",
+        "description": "Retrieve all web settings including sensitive data (Role level 1 required)",
+        "operationId": "GetWebSettingsAdmin",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebSetting"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
     "/api/users/find": {
       "post": {
         "tags": [
@@ -2244,6 +2316,398 @@
           }
         },
         "additionalProperties": false
+      },
+      "WebSetting": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteKeywords": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteAuthor": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteCopyright": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "sitePhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteLogo": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteFavicon": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteTheme": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteTimezone": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteStatus": {
+            "type": "boolean"
+          },
+          "sitePerPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "siteMaintenance": {
+            "type": "boolean"
+          },
+          "siteMaintenanceMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteSocialMedia": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteAnalytics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteSeo": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteMail": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteUpload": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "sitePayment": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteCaptcha": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteChat": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteBackup": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteOther": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteNotification": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteSecurity": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteCache": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteSession": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteCookie": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteDebug": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteLog": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteApi": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteThemeConfig": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteFooter": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteHeader": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteMeta": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WebSettingPublic": {
+        "type": "object",
+        "properties": {
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteKeywords": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteAuthor": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteCopyright": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "sitePhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteLogo": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteFavicon": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteTheme": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteTimezone": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteStatus": {
+            "type": "boolean"
+          },
+          "siteMaintenance": {
+            "type": "boolean"
+          },
+          "siteMaintenanceMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteSocialMedia": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteSeo": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteThemeConfig": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteFooter": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteHeader": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "siteMeta": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {
@@ -2278,6 +2742,9 @@
     },
     {
       "name": "CompetencySchemas"
+    },
+    {
+      "name": "Settings"
     },
     {
       "name": "Users"

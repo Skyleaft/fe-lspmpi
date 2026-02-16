@@ -9,48 +9,48 @@ export interface GalleryItem {
 }
 
 export interface ClaimUser {
-    id: string;
-    email: string | null;
-    roleId: number;
-    username: string | null;
-    profileName: string | null;
+	id: string;
+	email: string | null;
+	roleId: number;
+	username: string | null;
+	profileName: string | null;
 }
 
 export interface Role {
-    id: number;
-    name?: string | null;
-    level: number;
+	id: number;
+	name?: string | null;
+	level: number;
 }
 
 export interface UserProfile {
-    id: string;
-    name: string;
-    email: string;
-    phone?: string | null;
-    address?: string | null;
-    city?: string | null;
-    profilePicture?: string | null;
+	id: string;
+	name: string;
+	email: string;
+	phone?: string | null;
+	address?: string | null;
+	city?: string | null;
+	profilePicture?: string | null;
 }
 
 export interface UserData {
-    id: string;
-    username: string;
-    password: string;
-    passwordSalt: string;
-    roleId: number;
-    role: Role;
-    userProfileId: string;
-    userProfile: UserProfile;
-    createdAt: string;
-    updatedAt: string;
-    isActivated: boolean;
+	id: string;
+	username: string;
+	password: string;
+	passwordSalt: string;
+	roleId: number;
+	role: Role;
+	userProfileId: string;
+	userProfile: UserProfile;
+	createdAt: string;
+	updatedAt: string;
+	isActivated: boolean;
 }
 
 export interface CreateUserRequest {
-    name: string;
-    email: string;
-    username: string;
-    password: string;
+	name: string;
+	email: string;
+	username: string;
+	password: string;
 }
 
 export interface LoginResponse {
@@ -247,45 +247,45 @@ export interface UpdateArticleTagDto {
 
 // User API calls
 export interface User {
-    id: string;
-    username: string;
-    roleId: number;
-    role: {
-        id: number;
-        name: string;
-        level: number;
-    };
-    userProfile: {
-        id: string;
-        name: string;
-        email: string;
-        phone: string;
-        address: string;
-        city: string;
-        profilePicture: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-    isActivated: boolean;
+	id: string;
+	username: string;
+	roleId: number;
+	role: {
+		id: number;
+		name: string;
+		level: number;
+	};
+	userProfile: {
+		id: string;
+		name: string;
+		email: string;
+		phone: string;
+		address: string;
+		city: string;
+		profilePicture: string;
+	};
+	createdAt: string;
+	updatedAt: string;
+	isActivated: boolean;
 }
 
 export interface CreateUserRequest {
-    username: string;
-    password: string;
-    name: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    city?: string;
-    roleId: number;
+	username: string;
+	password: string;
+	name: string;
+	email: string;
+	phone?: string;
+	address?: string;
+	city?: string;
+	roleId: number;
 }
 export interface UpdateUserRequest {
-    username: string;
-    name: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    city?: string;
+	username: string;
+	name: string;
+	email: string;
+	phone?: string;
+	address?: string;
+	city?: string;
 }
 
 export interface CompetencySchema {
@@ -323,4 +323,123 @@ export interface UpdateCompetencySchemaDto {
 	fee?: number;
 	competencies?: string[];
 	image?: string;
+}
+
+// Web Setting interfaces
+export interface WebSetting {
+	id: number;
+	siteName?: string | null;
+	siteDescription?: string | null;
+	siteUrl?: string | null;
+	siteKeywords?: string | null;
+	siteAuthor?: string | null;
+	siteVersion?: string | null;
+	siteCopyright?: string | null;
+	siteEmail?: string | null;
+	sitePhone?: string | null;
+	siteAddress?: string | null;
+	siteLogo?: string | null;
+	siteFavicon?: string | null;
+	siteTheme?: string | null;
+	siteLanguage?: string | null;
+	siteTimezone?: string | null;
+	siteStatus: boolean;
+	sitePerPage: number;
+	siteMaintenance: boolean;
+	siteMaintenanceMessage?: string | null;
+	siteSocialMedia?: Record<string, string | null> | null;
+	siteAnalytics?: Record<string, string | null> | null;
+	siteSeo?: Record<string, string | null> | null;
+	siteMail?: Record<string, string | null> | null;
+	siteUpload?: Record<string, string | null> | null;
+	sitePayment?: Record<string, string | null> | null;
+	siteMap?: Record<string, string | null> | null;
+	siteCaptcha?: Record<string, string | null> | null;
+	siteChat?: Record<string, string | null> | null;
+	siteBackup?: Record<string, string | null> | null;
+	siteOther?: Record<string, string | null> | null;
+	siteNotification?: Record<string, string | null> | null;
+	siteSecurity?: Record<string, string | null> | null;
+	siteCache?: Record<string, string | null> | null;
+	siteSession?: Record<string, string | null> | null;
+	siteCookie?: Record<string, string | null> | null;
+	siteDebug?: Record<string, string | null> | null;
+	siteLog?: Record<string, string | null> | null;
+	siteApi?: Record<string, string | null> | null;
+	siteThemeConfig?: Record<string, string | null> | null;
+	siteFooter?: Record<string, string | null> | null;
+	siteHeader?: Record<string, string | null> | null;
+	siteMeta?: Record<string, string | null> | null;
+}
+
+export interface WebSettingPublic {
+	siteName?: string | null;
+	siteDescription?: string | null;
+	siteUrl?: string | null;
+	siteKeywords?: string | null;
+	siteAuthor?: string | null;
+	siteVersion?: string | null;
+	siteCopyright?: string | null;
+	siteEmail?: string | null;
+	sitePhone?: string | null;
+	siteAddress?: string | null;
+	siteLogo?: string | null;
+	siteFavicon?: string | null;
+	siteTheme?: string | null;
+	siteLanguage?: string | null;
+	siteTimezone?: string | null;
+	siteStatus: boolean;
+	siteMaintenance: boolean;
+	siteMaintenanceMessage?: string | null;
+	siteSocialMedia?: Record<string, string | null> | null;
+	siteSeo?: Record<string, string | null> | null;
+	siteThemeConfig?: Record<string, string | null> | null;
+	siteFooter?: Record<string, string | null> | null;
+	siteHeader?: Record<string, string | null> | null;
+	siteMeta?: Record<string, string | null> | null;
+}
+
+export interface UpdateWebSettingRequest {
+	siteName?: string | null;
+	siteDescription?: string | null;
+	siteUrl?: string | null;
+	siteKeywords?: string | null;
+	siteAuthor?: string | null;
+	siteVersion?: string | null;
+	siteCopyright?: string | null;
+	siteEmail?: string | null;
+	sitePhone?: string | null;
+	siteAddress?: string | null;
+	siteLogo?: string | null;
+	siteFavicon?: string | null;
+	siteTheme?: string | null;
+	siteLanguage?: string | null;
+	siteTimezone?: string | null;
+	siteStatus: boolean;
+	sitePerPage: number;
+	siteMaintenance: boolean;
+	siteMaintenanceMessage?: string | null;
+	siteSocialMedia?: Record<string, string | null> | null;
+	siteAnalytics?: Record<string, string | null> | null;
+	siteSeo?: Record<string, string | null> | null;
+	siteMail?: Record<string, string | null> | null;
+	siteUpload?: Record<string, string | null> | null;
+	sitePayment?: Record<string, string | null> | null;
+	siteMap?: Record<string, string | null> | null;
+	siteCaptcha?: Record<string, string | null> | null;
+	siteChat?: Record<string, string | null> | null;
+	siteBackup?: Record<string, string | null> | null;
+	siteOther?: Record<string, string | null> | null;
+	siteNotification?: Record<string, string | null> | null;
+	siteSecurity?: Record<string, string | null> | null;
+	siteCache?: Record<string, string | null> | null;
+	siteSession?: Record<string, string | null> | null;
+	siteCookie?: Record<string, string | null> | null;
+	siteDebug?: Record<string, string | null> | null;
+	siteLog?: Record<string, string | null> | null;
+	siteApi?: Record<string, string | null> | null;
+	siteThemeConfig?: Record<string, string | null> | null;
+	siteFooter?: Record<string, string | null> | null;
+	siteHeader?: Record<string, string | null> | null;
+	siteMeta?: Record<string, string | null> | null;
 }

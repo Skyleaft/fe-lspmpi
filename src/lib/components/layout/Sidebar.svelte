@@ -1,5 +1,18 @@
-<script lang='ts'>
-	import { Home, User, Shield, Calendar, Settings, BarChart3, ClipboardList, ArrowBigLeft, FileText, Folder, Tag } from '@lucide/svelte';
+<script lang="ts">
+	import {
+		Home,
+		User,
+		Shield,
+		Calendar,
+		Settings,
+		BarChart3,
+		ClipboardList,
+		ArrowBigLeft,
+		FileText,
+		Folder,
+		Tag,
+		Globe
+	} from '@lucide/svelte';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
@@ -42,6 +55,7 @@
 		{ href: '/dashboard/results', icon: BarChart3, label: 'Hasil Uji' },
 		{ href: '/dashboard/settings', icon: Settings, label: 'Pengaturan' },
 		{ href: '/dashboard/manajemen-akun', icon: User, label: 'Manajemen Akun', roles: [1] },
+		{ href: '/dashboard/web-setting', icon: Globe, label: 'Web Setting', roles: [1] }
 	];
 
 	const menuGroups: MenuGroup[] = [
@@ -59,12 +73,15 @@
 
 	const hasAccess = (roles?: number[]) => !roles || roles.includes(userRole);
 
-	$: filteredMenuItems = menuItems.filter(item => hasAccess(item.roles));
-	$: filteredMenuGroups = menuGroups.filter(group => hasAccess(group.roles));
-	$: kontenItems = filteredMenuGroups.find(g => g.label === 'Konten')?.items.map(item => ({
-		...item,
-		isActive: isActive(item.href)
-	})) || [];
+	$: filteredMenuItems = menuItems.filter((item) => hasAccess(item.roles));
+	$: filteredMenuGroups = menuGroups.filter((group) => hasAccess(group.roles));
+	$: kontenItems =
+		filteredMenuGroups
+			.find((g) => g.label === 'Konten')
+			?.items.map((item) => ({
+				...item,
+				isActive: isActive(item.href)
+			})) || [];
 </script>
 
 <!-- Sidebar -->
@@ -85,10 +102,20 @@
 
 		<nav class="space-y-2">
 			{#each filteredMenuItems as item}
-				<NavItem href={item.href} icon={item.icon} label={item.label} isActive={isActive(item.href)} />
+				<NavItem
+					href={item.href}
+					icon={item.icon}
+					label={item.label}
+					isActive={isActive(item.href)}
+				/>
 			{/each}
 			{#each filteredMenuGroups as group}
-				<NavGroup icon={group.icon} label={group.label} bind:isOpen={kontenOpen} items={kontenItems} />
+				<NavGroup
+					icon={group.icon}
+					label={group.label}
+					bind:isOpen={kontenOpen}
+					items={kontenItems}
+				/>
 			{/each}
 		</nav>
 	</div>

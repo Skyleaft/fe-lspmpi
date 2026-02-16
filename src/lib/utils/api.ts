@@ -1,11 +1,11 @@
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import { dev } from '$app/environment';
 import { browser } from '$app/environment';
-import type { 
-    FindRequest, 
-    PaginatedResponse, 
-    CreateArticleRequest, 
-    ArticleCategory, 
+import type {
+    FindRequest,
+    PaginatedResponse,
+    CreateArticleRequest,
+    ArticleCategory,
     UpdateArticleRequest,
     User,
     CreateUserRequest,
@@ -22,7 +22,9 @@ import type {
     CreateArticleWithThumbnailDto,
     PhotoUploadResponse,
     CompetencySchema,
-    CompetencySchemaResponse
+    CompetencySchemaResponse,
+    WebSetting,
+    UpdateWebSettingRequest
 } from '$lib/types';
 
 export const API_BASE_URL = PUBLIC_API_BASE_URL || 'http://localhost:3000';
@@ -532,7 +534,7 @@ export async function findCompetencySchemas(params: FindRequest = { page: 1, pag
 
     let filteredSchemas = dummySchemas;
     if (params.search) {
-        filteredSchemas = dummySchemas.filter(schema => 
+        filteredSchemas = dummySchemas.filter(schema =>
             schema.name.toLowerCase().includes(params.search!.toLowerCase()) ||
             schema.description.toLowerCase().includes(params.search!.toLowerCase())
         );
@@ -567,4 +569,35 @@ export async function getLatestArticles(): Promise<Article[]> {
     }
 
     return response.json();
+}
+
+// Web Settings API
+export async function getWebSettingsAdmin(): Promise<WebSetting> {
+    const response = await fetch(buildApiUrl('/api/settings/admin'), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to get web settings: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+export async function updateWebSettings(data: UpdateWebSettingRequest): Promise<Response> {
+    const response = await fetch(buildApiUrl('/api/settings'), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to update web settings: ${response.status} ${response.statusText}`);
+    }
+
+    return response;
 }
