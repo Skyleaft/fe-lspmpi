@@ -73,7 +73,7 @@
 			<h3 class="mb-3 text-xl font-bold text-gray-900">
 				<a href={href} class="transition-colors hover:text-blue-600">{title}</a>
 			</h3>
-			<p class="mb-4 text-gray-600">{excerpt}</p>
+			<p class="mb-4 text-gray-600">{@html excerpt}</p>
 			<a href={href} class="font-medium text-blue-600 transition-colors hover:text-blue-800">
 				Baca Selengkapnya →
 			</a>

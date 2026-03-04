@@ -44,7 +44,7 @@
 	});
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<!-- <svelte:head><link rel="icon" href={favicon} /></svelte:head> -->
 
 {#if !$page.url.pathname.startsWith('/dashboard')}
 	<Navbar />
