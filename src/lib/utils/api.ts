@@ -496,8 +496,8 @@ export async function findCompetencySchemas(params: FindRequest = { page: 1, pag
     const dummySchemas: CompetencySchema[] = [
         {
             id: 1,
-            name: 'Sertifikasi Okupasi Kepala Madrasah Obtidaiyah',
-            description: 'Sertifikasi untuk posisi Kepala Madrasah Obtidaiyah',
+            name: 'Sertifikasi Okupasi Kepala Madrasah Ibtidaiyah',
+            description: 'Sertifikasi untuk posisi Kepala Madrasah Ibtidaiyah',
             duration: '6 bulan',
             fee: 2500000,
             competencies: ['Kepemimpinan Pendidikan', 'Manajemen Lembaga', 'Kurikulum Islam'],

@@ -21,7 +21,7 @@
 			</p>
 		</div>
 
-		<div class="grid md:grid-cols-2  lg:grid-cols-4 gap-6">
+		<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
 			{#each schemas as schema (schema.id)}
 				<SchemaCard {schema} delay={schema.id === 1 ? 0 : schema.id === 2 ? 100 : schema.id === 3 ? 200 : schema.id === 4 ? 300 : schema.id === 5 ? 400 : 500} />
 			{/each}

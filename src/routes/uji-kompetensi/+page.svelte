@@ -56,7 +56,7 @@
 		</div>
 
 		<div class="bg-gray-50 p-8 rounded-lg" in:fly={{ y: 50, duration: 600 }}>
-			<h2 class="text-2xl font-bold text-center mb-8">Jadwal Uji Kompetensi 2024</h2>
+			<h2 class="text-2xl font-bold text-center mb-8">Jadwal Uji Kompetensi</h2>
 			<div class="overflow-x-auto">
 				<table class="w-full bg-white rounded-lg overflow-hidden shadow">
 					<thead class="bg-gray-100">
@@ -68,7 +68,7 @@
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200">
-						<tr>
+						<!-- <tr>
 							<td class="px-6 py-4">Batch 13</td>
 							<td class="px-6 py-4">1 Feb - 15 Mar 2024</td>
 							<td class="px-6 py-4">20-22 Mar 2024</td>
@@ -91,7 +91,7 @@
 							<td class="px-6 py-4">
 								<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm">Belum Buka</span>
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>

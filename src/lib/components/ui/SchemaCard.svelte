@@ -42,7 +42,7 @@
 			<img
 				src={schema.image}
 				alt={schema.name}
-				class="h-48 w-full rounded-xl object-cover"
+				class="max-h-48 w-full rounded-xl object-cover"
 				on:load={initColorExtraction}
 			/>
 		{:else}
