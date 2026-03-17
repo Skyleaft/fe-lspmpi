@@ -295,7 +295,7 @@ export interface CompetencySchema {
 	duration: string;
 	fee: number;
 	competencies: string[];
-	image: string;
+	imageUrl: string;
 	createdAt?: string;
 	updatedAt?: string;
 }
@@ -313,7 +313,7 @@ export interface CreateCompetencySchemaDto {
 	duration: string;
 	fee: number;
 	competencies: string[];
-	image?: string;
+	imageUrl?: string;
 }
 
 export interface UpdateCompetencySchemaDto {
@@ -322,7 +322,7 @@ export interface UpdateCompetencySchemaDto {
 	duration?: string;
 	fee?: number;
 	competencies?: string[];
-	image?: string;
+	imageUrl?: string;
 }
 
 // Web Setting interfaces

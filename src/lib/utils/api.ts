@@ -23,6 +23,8 @@ import type {
     PhotoUploadResponse,
     CompetencySchema,
     CompetencySchemaResponse,
+    CreateCompetencySchemaDto,
+    UpdateCompetencySchemaDto,
     WebSetting,
     UpdateWebSettingRequest
 } from '$lib/types';
@@ -493,68 +495,80 @@ export async function uploadProfilePhoto(file: File): Promise<{ fileName: string
 
 // Competency Schema API functions
 export async function findCompetencySchemas(params: FindRequest = { page: 1, pageSize: 10, search: '' }): Promise<CompetencySchemaResponse> {
-    const dummySchemas: CompetencySchema[] = [
-        {
-            id: 1,
-            name: 'Sertifikasi Okupasi Kepala Madrasah Ibtidaiyah',
-            description: 'Sertifikasi untuk posisi Kepala Madrasah Ibtidaiyah',
-            duration: '6 bulan',
-            fee: 2500000,
-            competencies: ['Kepemimpinan Pendidikan', 'Manajemen Lembaga', 'Kurikulum Islam'],
-            image: '/img/1.jpeg'
+    const response = await fetch(buildApiUrl('/api/competency-schemas/find'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-        {
-            id: 2,
-            name: 'Sertifikasi Okupasi Kepala Madrasah Tsanawiyah',
-            description: 'Sertifikasi untuk posisi Kepala Madrasah Tsanawiyah',
-            duration: '4 bulan',
-            fee: 2500000,
-            competencies: ['Pedagogik Islam', 'Metodologi Pembelajaran', 'Evaluasi Pembelajaran'],
-            image: '/img/2.jpeg'
-        },
-        {
-            id: 3,
-            name: 'Sertifikasi Okupasi Kepala Madrasah Aliyah',
-            description: 'Sertifikasi untuk posisi Kepala Madrasah Aliyah',
-            duration: '3 bulan',
-            fee: 2500000,
-            competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
-            image: '/img/3.jpeg'
-        },
-        {
-            id: 4,
-            name: 'Sertifikasi Okupasi Pimpinan Perguruan Tinggi Keagamaan Islam',
-            description: 'Sertifikasi untuk posisi Pimpinan Perguruan Tinggi Keagamaan Islam',
-            duration: '3 bulan',
-            fee: 2500000,
-            competencies: ['Administrasi Akademik', 'Manajemen Data', 'Sistem Informasi'],
-            image: '/img/4.jpeg'
-        }
-    ];
+        credentials: 'include',
+        body: JSON.stringify(params),
+    });
 
-    let filteredSchemas = dummySchemas;
-    if (params.search) {
-        filteredSchemas = dummySchemas.filter(schema =>
-            schema.name.toLowerCase().includes(params.search!.toLowerCase()) ||
-            schema.description.toLowerCase().includes(params.search!.toLowerCase())
-        );
+    if (!response.ok) {
+        throw new Error(`Failed to find competency schemas: ${response.status} ${response.statusText}`);
     }
 
-    const startIndex = (params.page - 1) * params.pageSize;
-    const endIndex = startIndex + params.pageSize;
-    const paginatedData = filteredSchemas.slice(startIndex, endIndex);
-
-    return {
-        data: paginatedData,
-        totalCount: filteredSchemas.length,
-        totalPages: Math.ceil(filteredSchemas.length / params.pageSize),
-        currentPage: params.page
-    };
+    return response.json();
 }
 
-export async function getCompetencySchema(id: number): Promise<CompetencySchema | null> {
-    const response = await findCompetencySchemas();
-    return response.data.find(schema => schema.id === id) || null;
+export async function createCompetencySchema(data: CreateCompetencySchemaDto): Promise<CompetencySchema> {
+    const response = await fetch(buildApiUrl('/api/competency-schemas'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to create competency schema: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+export async function updateCompetencySchema(id: number, data: UpdateCompetencySchemaDto): Promise<CompetencySchema> {
+    const response = await fetch(buildApiUrl(`/api/competency-schemas/${id}`), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to update competency schema: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+export async function deleteCompetencySchema(id: number): Promise<Response> {
+    const response = await fetch(buildApiUrl(`/api/competency-schemas/${id}`), {
+        method: 'DELETE',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete competency schema: ${response.status} ${response.statusText}`);
+    }
+
+    return response;
+}
+
+export async function getCompetencySchema(id: number): Promise<CompetencySchema> {
+    const response = await fetch(buildApiUrl(`/api/competency-schemas/${id}`), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to get competency schema: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
 }
 
 // Get latest articles API
@@ -600,4 +614,21 @@ export async function updateWebSettings(data: UpdateWebSettingRequest): Promise<
     }
 
     return response;
+}
+
+export async function uploadUniversalImage(file: File, subdir: string): Promise<{ path: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(buildApiUrl(`/api/upload/${subdir}`), {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to upload image: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
 }

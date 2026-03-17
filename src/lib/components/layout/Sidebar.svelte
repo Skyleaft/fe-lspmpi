@@ -66,7 +66,8 @@
 			items: [
 				{ href: '/dashboard/konten/artikel', icon: FileText, label: 'Artikel' },
 				{ href: '/dashboard/konten/kategori', icon: Folder, label: 'Kategori' },
-				{ href: '/dashboard/konten/tags', icon: Tag, label: 'Tags' }
+				{ href: '/dashboard/konten/tags', icon: Tag, label: 'Tags' },
+				{ href: '/dashboard/konten/skema-sertifikasi', icon: ClipboardList, label: 'Skema Sertifikasi' }
 			]
 		}
 	];
