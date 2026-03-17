@@ -91,6 +91,18 @@
 			}
 
 			onSave();
+			
+			// Clear form if it was a new schema creation
+			if (!schema) {
+				name = '';
+				description = '';
+				duration = '';
+				fee = 0;
+				competencies = [];
+				imageUrl = '';
+				newCompetency = '';
+			}
+			
 			onClose();
 		} catch (err: any) {
 			error = err.message || 'Gagal menyimpan skema kompetensi';
