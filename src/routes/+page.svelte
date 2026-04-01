@@ -27,4 +27,4 @@
 <AlumniReviews />
 <AssessorList />
 <NewsSection articles={data.articles} />
-<SchemaData />
+<!-- <SchemaData /> -->

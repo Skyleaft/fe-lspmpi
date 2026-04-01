@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { Home, User, Bell, MessageSquare, Shield } from '@lucide/svelte';
+	import { Home, User, Bell, MessageSquare, Menu } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { authStore } from '$lib/stores/auth';
 	import { siteSettings } from '$lib/stores/siteSettings';
 	import type { ClaimUser } from '$lib/types';
+
+	interface Props {
+		sidebarOpen?: boolean;
+		toggleSidebar?: () => void;
+	}
+	let { sidebarOpen = false, toggleSidebar = () => {} }: Props = $props();
 
 	let showProfileMenu = $state(false);
 	let authState = $state<{
@@ -66,7 +72,24 @@
 </script>
 
 <header class="mb-8">
-	<div class="flex items-center justify-between">
+	<!-- Mobile Topbar Row -->
+	<div class="flex items-center justify-between mb-4 lg:hidden">
+		<button
+			onclick={toggleSidebar}
+			class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+		>
+			<Menu class="h-6 w-6" />
+		</button>
+		<h1 class="text-lg font-bold text-gray-900">{pageInfo.title}</h1>
+		<div class="flex items-center space-x-2">
+			<button class="p-2 text-gray-500 hover:text-gray-700">
+				<Bell class="h-5 w-5" />
+			</button>
+		</div>
+	</div>
+
+	<!-- Desktop Header Row -->
+	<div class="hidden lg:flex items-center justify-between">
 		<div>
 			<h1 class="text-3xl font-bold text-gray-900">{pageInfo.title}</h1>
 			<p class="mt-1 text-gray-600">{pageInfo.subtitle}</p>

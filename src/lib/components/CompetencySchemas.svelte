@@ -3,6 +3,7 @@
 	import { findCompetencySchemas } from '$lib/utils/api';
 	import type { CompetencySchema } from '$lib/types';
 	import SchemaCard from './ui/SchemaCard.svelte';
+	import { resolve } from '$app/paths';
 	
 	let schemas: CompetencySchema[] = [];
 
@@ -28,7 +29,7 @@
 		</div>
 
 		<div class="text-center mt-12">
-			<a href="/uji-kompetensi" data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none inline-block">
+			<a href={resolve('/uji-kompetensi')} data-ripple-light="true" class="select-none rounded-lg bg-blue-600 py-3 px-8 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none inline-block">
 				Lihat Semua Skema
 			</a>
 		</div>

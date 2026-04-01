@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { siteSettings } from '$lib/stores/siteSettings';
+	import { resolve } from '$app/paths';
 </script>
 
 <section class="overflow-hidden bg-gradient-to-br from-blue-200 to-blue-700 py-20">
@@ -20,14 +21,14 @@
 			in:fly={{ x: -100, duration: 800, delay: 400 }}
 		>
 			<a
-				href="/uji-kompetensi"
+				href={resolve('/uji-kompetensi')}
 				data-ripple-light="true"
 				class="rounded-lg bg-white px-6 py-3 text-center align-middle font-sans text-sm font-bold text-blue-600 uppercase shadow-md shadow-white/20 transition-all select-none hover:scale-105 hover:shadow-lg hover:shadow-white/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
 			>
 				Daftar Uji Kompetensi
 			</a>
 			<a
-				href="/tentang"
+				href={resolve('/tentang')}
 				data-ripple-dark="true"
 				class="rounded-lg border-2 border-white px-6 py-3 text-center align-middle font-sans text-sm font-bold text-white uppercase transition-all select-none hover:scale-105 hover:bg-white hover:text-blue-600 focus:opacity-[0.85] active:opacity-[0.85]"
 			>

@@ -7,32 +7,36 @@
 		Settings,
 		BarChart3,
 		ClipboardList,
-		ArrowBigLeft,
+		X,
 		FileText,
 		Folder,
 		Tag,
 		Globe
 	} from '@lucide/svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { authStore } from '$lib/stores/auth';
 	import NavItem from '$lib/components/ui/NavItem.svelte';
 	import NavGroup from '$lib/components/ui/NavGroup.svelte';
 	import type { Component } from 'svelte';
 
-	let sidebarOpen = false;
-	let kontenOpen = false;
+	interface Props {
+		isOpen?: boolean;
+		onClose?: () => void;
+	}
 
-	onMount(() => {
-		sidebarOpen = true;
+	let { isOpen = $bindable(false), onClose = () => {} }: Props = $props();
+
+	let kontenOpen = $state(false);
+
+	$effect(() => {
+		const currentPath = $page.url.pathname;
+		kontenOpen = currentPath.startsWith('/dashboard/konten/');
 	});
 
-	$: currentPath = $page.url.pathname;
-	$: kontenOpen = currentPath.startsWith('/dashboard/konten/');
-	$: isActive = (path: string) => currentPath === path;
-	$: userRole = $authStore.user?.roleId || 0;
+	const isActive = (path: string): boolean => $page.url.pathname === path;
+	const userRole = $derived($authStore.user?.roleId || 0);
 
 	interface MenuItem {
 		href: string;
@@ -74,67 +78,77 @@
 
 	const hasAccess = (roles?: number[]) => !roles || roles.includes(userRole);
 
-	$: filteredMenuItems = menuItems.filter((item) => hasAccess(item.roles));
-	$: filteredMenuGroups = menuGroups.filter((group) => hasAccess(group.roles));
-	$: kontenItems =
+	const filteredMenuItems = $derived(menuItems.filter((item) => hasAccess(item.roles)));
+	const filteredMenuGroups = $derived(menuGroups.filter((group) => hasAccess(group.roles)));
+	const kontenItems = $derived(
 		filteredMenuGroups
 			.find((g) => g.label === 'Konten')
 			?.items.map((item) => ({
 				...item,
 				isActive: isActive(item.href)
-			})) || [];
+			})) || []
+	);
 </script>
+
+<!-- Mobile Overlay -->
+<div
+	class="fixed inset-0 z-40 bg-black/50 transition-opacity lg:hidden"
+	class:opacity-0={!isOpen}
+	class:opacity-100={isOpen}
+	class:pointer-events-none={!isOpen}
+	transition:fade={{ duration: 200 }}
+	onclick={onClose}
+></div>
 
 <!-- Sidebar -->
 <div
-	class="dashboard-sidebar flex h-full flex-col"
-	transition:fly={{ x: -300, duration: 400, easing: quintOut }}
+	class="fixed top-0 left-0 z-50 h-full bg-white lg:z-40 lg:translate-x-0"
+	class:translate-x-0={isOpen}
+	class:-translate-x-full={!isOpen}
+	transition:fly={{ x: -300, duration: 300, easing: quintOut }}
 >
-	<div class="p-4">
-		<div class="mb-8 flex items-center space-x-3">
-			<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-				<Shield class="h-6 w-6 text-white" />
-			</div>
-			<div>
-				<h1 class="text-lg font-bold text-gray-900">LSP MPI</h1>
-				<p class="text-xs text-gray-500">Dashboard</p>
-			</div>
+	<div class="flex h-full w-[280px] flex-col">
+		<!-- Mobile Close Button -->
+		<div class="flex items-center justify-end p-4 lg:hidden">
+			<button
+				onclick={onClose}
+				class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+			>
+				<X class="h-5 w-5" />
+			</button>
 		</div>
 
-		<nav class="space-y-2">
-			{#each filteredMenuItems as item}
-				<NavItem
-					href={item.href}
-					icon={item.icon}
-					label={item.label}
-					isActive={isActive(item.href)}
-				/>
-			{/each}
-			{#each filteredMenuGroups as group}
-				<NavGroup
-					icon={group.icon}
-					label={group.label}
-					bind:isOpen={kontenOpen}
-					items={kontenItems}
-				/>
-			{/each}
-		</nav>
+		<div class="flex-1 overflow-y-auto">
+			<div class="p-4 pt-0 lg:pt-4">
+				<div class="mb-8 flex items-center space-x-3">
+					<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
+						<Shield class="h-6 w-6 text-white" />
+					</div>
+					<div>
+						<h1 class="text-lg font-bold text-gray-900">LSP MPI</h1>
+						<p class="text-xs text-gray-500">Dashboard</p>
+					</div>
+				</div>
+
+				<nav class="space-y-2">
+					{#each filteredMenuItems as item (item.href)}
+						<NavItem
+							href={item.href}
+							icon={item.icon}
+							label={item.label}
+							isActive={isActive(item.href)}
+						/>
+					{/each}
+					{#each filteredMenuGroups as group (group.label)}
+						<NavGroup
+							icon={group.icon}
+							label={group.label}
+							bind:isOpen={kontenOpen}
+							items={kontenItems}
+						/>
+					{/each}
+				</nav>
+			</div>
+		</div>
 	</div>
 </div>
-
-<style>
-	.dashboard-sidebar {
-		width: 280px;
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		z-index: 40;
-		box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-	}
-
-	@media (max-width: 1024px) {
-		.dashboard-sidebar {
-			display: none; /* Hide on mobile, could add toggle later */
-		}
-	}
-</style>

@@ -3,16 +3,13 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Navbar from '$lib/components/layout/Navbar.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
-	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import { onNavigate } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { fly } from 'svelte/transition';
 	import { authStore } from '$lib/stores/auth';
 	import { siteSettings } from '$lib/stores/siteSettings';
 
 	import { onMount } from 'svelte';
-	// @ts-ignore
+	// @ts-expect-error Material Tailwind lacks TS types
 	import { initMaterialTailwind } from '@material-tailwind/html';
 
 	// Receive server data from +layout.server.ts
@@ -49,22 +46,9 @@
 {#if !$page.url.pathname.startsWith('/dashboard')}
 	<Navbar />
 {/if}
-{#if $page.url.pathname.startsWith('/dashboard') && $authStore.isAuthenticated}
-	<Sidebar />
-{/if}
 <main class="page-transition">
 	{@render children()}
 </main>
 {#if !$page.url.pathname.startsWith('/dashboard')}
 	<Footer />
 {/if}
-
-<!-- {#if !isDashboard()}
-	<Navbar />
-{/if}
-<main class="page-transition">
-	{@render children()}
-</main>
-{#if !isDashboard()}
-	<Footer />
-{/if} -->
